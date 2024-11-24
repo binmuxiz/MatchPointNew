@@ -1,3 +1,4 @@
+using System;
 using Fusion;
 using Network;
 using UnityEngine;
@@ -21,7 +22,8 @@ public class GameManager: Singleton<GameManager>
     [Header("NetworkRunner")]
     public Transform groupRoomSpwanPosition;
     [SerializeField] private GameObject groupRoomRunnerPrefab;
-
+    
+    [SerializeField] private GameObject doubleRoomRunnerPrefab;
     
     
     private void Awake()
@@ -70,9 +72,24 @@ public class GameManager: Singleton<GameManager>
     }
 
 // 1:1 미팅 룸 조인        
-    public void EnterDoubleRoom(string myId, string otherId)
+    public async void EnterDoubleRoom(string myId, string otherId)
     {
-        Debug.Log("Join DoubleRoom");
-        // _doubleRoom.Enter(myId, otherId);
+        Debug.Log("GameManager.EnterDoubleRoom()");
+        GameState = GameState.Double;
+
+        string[] arr = { myId, otherId };
+        Array.Sort(arr);
+        string roomId = $"{arr[0]}_{arr[1]}";
+        
+        var args = new StartGameArgs
+        {
+            GameMode = GameMode.Shared,
+            SessionName = roomId,
+            PlayerCount = 2,
+        };
+
+        await SessionManager.Instance.StartSessionAsync(args, doubleRoomRunnerPrefab);
+
+        DoubleRoom.Instance.Enter();
     }
 }

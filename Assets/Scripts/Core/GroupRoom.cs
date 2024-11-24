@@ -1,63 +1,193 @@
-using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-
-[Serializable]
-public class Participant
-{
-    public string id;
-    public string name;
-    public string gender;
-
-    public Participant(string id, string name, string gender)
-    {
-        this.id = id;
-        this.name = name;
-        this.gender = gender;
-    }
-}
-
-
 
 public class GroupRoom: Singleton<GroupRoom>
 {
+    public Camera mainCamera;
+    public bool enableAIBot;
+    public bool enabledVote = false;
+    public const int CountDown = 3;
+
+    public string votedName = null;
+    
     [Header("GroupRoomUI")] 
-    [SerializeField] private GameObject UIGO;
     [SerializeField] private GameObject groupRoomUIGO;
+    [SerializeField] private GameObject AI;
+    [SerializeField] private GameObject TextBox1;
+    [SerializeField] private GameObject TextBox2;
+    [SerializeField] private GameObject TextBox3;
+
+    [SerializeField] private GameObject voteDoneUI;
+    [SerializeField] private GameObject voteTotalUI;
+    [SerializeField] private GameObject voteResultUI;
+    [SerializeField] private TMP_Text resultText;
+
+    [SerializeField] private TMP_Text timerText;
 
     [Header("WaitingUI")] 
     [SerializeField] private GameObject waitingUIGO; //exit
     [SerializeField] private TMP_Text WaitingPlayerCountText; // 대기인원 0/4
     
-    [SerializeField] private Button exitButton;
-
-    
-    [Header("Data")]
-    [SerializeField] private List<Participant> _participants;
-    [SerializeField] private Participant _voted;
-
-
-
-    public const int CountDown = 3;
 
     private void Awake()
     {
-        UIGO.SetActive(false);
-        exitButton.onClick.AddListener(ExitRoom);
+        mainCamera = Camera.main;
+        groupRoomUIGO.SetActive(false);
+        waitingUIGO.SetActive(false);
     }
 
-    public async void Enter(int maxPlayerCount)
+    private void Update()
     {
-        UIGO.SetActive(true);
-        await MonitorPlayerCountAsync(maxPlayerCount);
-        Process();
+        if (!enableAIBot) return;
+        
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (mainCamera == null) mainCamera = Camera.main;
+            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                GameObject go = hit.collider.gameObject;
+            
+                if (go.CompareTag("AIBot"))
+                {
+                    Debug.Log("AIBot clicked");
+                    AI.SetActive(true);
+                    TextBox1.SetActive(true);
+                }
+                else if (enabledVote && go.CompareTag("Player"))
+                {
+                    Debug.Log("플레이어 클릭해서 투표");
+                    enabledVote = false;
+                    SharedData sh = go.gameObject.GetComponent<SharedData>();
+                    
+                    string votedId = sh.UserId;
+                    votedName = sh.UserName;
+                    
+                    SharedData.Instance.RpcVote(votedId);
+                }
+            }
+        }
+
+        if (SharedData.VoteDoneTrigger)
+        {
+            VoteTotalProcess();
+        }
+    }
+
+
+    private void VoteTotalProcess() // 투표 집계
+    {
+        // UI 띄우고
+        voteTotalUI.SetActive(true);
+        
+        // 집계 
+        Dictionary<string, string> dict = SharedData.LoveDict;
+        string myId = PlayerData.Instance.UserId;
+        
+        string selectedId = dict[myId]; // 에러?? 아님 null?? 
+        if (selectedId != null)
+        {
+            string tempId = dict[selectedId];
+            if (tempId != null && tempId == myId) //이어짐
+            {
+                resultText.text = $"당신이 선택한 {votedName}님도 당신을 선택했어요.\n5초 뒤 1:1 미팅룸으로 이동할게요.";
+                GoToDoubleRoom(myId, selectedId);
+            }
+            else
+            {
+                resultText.text = $"당신이 선택한 {votedName}님이 당신을 선택하지 않았어요.\n5초 뒤 월드로 돌아갈게요.";
+                GoToWorld();
+            }
+        }
+        else
+        {
+            resultText.text = "당신은 아무도 선택하지 않았네요. 다음에 더 좋은 인연을 만날 수 있을 거예요.\n5초 뒤 월드로 돌아갈게요.";
+            GoToWorld();
+        }
+    }
+
+    private void GoToDoubleRoom(string myId, string selectedId)
+    {
+        for (int i = 10; i > 0; i--)
+        {
+            timerText.text = "{i}";
+        }
+        GameManager.Instance.EnterDoubleRoom(myId, selectedId);
+    }
+    
+    private void GoToWorld()
+    {
+        for (int i = 10; i > 0; i--)
+        {
+            timerText.text = "{i}";
+        }
+        GameManager.Instance.EnterWorld();
     }
     
 
-    private void ExitRoom()
+    public void ShowTextBox2UI()
+    {
+        TextBox1.SetActive(false);
+        TextBox2.SetActive(true);
+    }
+
+    public void ShowTextBox3UI()
+    {
+        TextBox1.SetActive(false);
+        TextBox3.SetActive(true);
+    }
+
+    public void HideTextBox3UI()
+    {
+        TextBox3.SetActive(false);
+    }
+
+    public void AllowBalanceGameProcess() // 밸런스 게임 시작하기 
+    {
+        SharedData.Instance.RpcSetBalanceGameTrigger(true);
+    }
+    
+    public void EnableVoteProcess() //TODO 사랑의 작대기 하는 대사 클릭 시 -> 버튼에 연결 해주기
+    {
+        enabledVote = true;
+        TextBox2.SetActive(false);
+        AI.SetActive(false);
+    }
+    
+
+    public async void Enter(int maxPlayerCount)
+    {
+        waitingUIGO.SetActive(true);
+        await MonitorPlayerCountAsync(maxPlayerCount);
+        waitingUIGO.SetActive(false);
+        
+        Process();
+    }
+    
+    
+    private void Process()
+    {
+        Debug.Log("Process");
+
+        enableAIBot = true;
+        groupRoomUIGO.SetActive(true);
+
+        if (RunnerController.Runner.IsSharedModeMasterClient) //방장
+        {
+            voteDoneUI.SetActive(true);
+        }
+    }
+
+    public void OnClickedVoteDoneButton()
+    {
+        SharedData.Instance.RpcSetVoteDoneTrigger(true);
+    }
+
+    public void ExitRoom()
     {
         GameManager.Instance.EnterWorld();
     }
@@ -104,38 +234,38 @@ public class GroupRoom: Singleton<GroupRoom>
     }
 
 
+
+
     
-    private async void Process()
-    {
-        Debug.Log("Process");
-
-        // VoiceController.Connect();  // 보이스챗 연결
-
-
-        // voiceController.Disconnect(); // 보이스챗 연결 종료 
-    }
-
-
-
-    private void SetParticipantList()
-    {
-        Debug.Log("Set Participant List");
-        _participants = new List<Participant>();
-        
-        // Participant List 생성
-        List<SharedData> sharedDatas = RunnerController.SharedDatas;
-        foreach (var sh in sharedDatas)
-        {
-            Participant p = new Participant(sh.UserId, sh.UserName, sh.Gender);
-            _participants.Add(p);
-        }
-
-        Debug.Log("------------------참여자 목록 ----------------------");
-
-        foreach (var participant in _participants)
-        {
-            Debug.Log($"id: {participant.id}, name: {participant.name}, gender: {participant.gender}");
-        }
-    }
-
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    // private void SetParticipantList()
+    // {
+    //     Debug.Log("Set Participant List");
+    //     _participants = new List<Participant>();
+    //     
+    //     // Participant List 생성
+    //     List<SharedData> sharedDatas = RunnerController.SharedDatas;
+    //     foreach (var sh in sharedDatas)
+    //     {
+    //         Participant p = new Participant(sh.UserId, sh.UserName, sh.Gender);
+    //         _participants.Add(p);
+    //     }
+    //
+    //     Debug.Log("------------------참여자 목록 ----------------------");
+    //
+    //     foreach (var participant in _participants)
+    //     {
+    //         Debug.Log($"id: {participant.id}, name: {participant.name}, gender: {participant.gender}");
+    //     }
+    // }
 }

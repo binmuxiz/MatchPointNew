@@ -63,6 +63,7 @@ public class RunnerController : MonoBehaviour, INetworkRunnerCallbacks
                     spawnPosition = GameManager.Instance.groupRoomSpwanPosition.position;
                     break;
                 case GameState.Double:
+                    spawnPosition = Vector3.zero;
                     break;
                 default:
                     Debug.LogError("Invalid game state");

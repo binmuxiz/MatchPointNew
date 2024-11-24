@@ -51,6 +51,8 @@ public class ObjectClickDetector: MonoBehaviour
 
     private void HandlePlayerClicked(GameObject go)
     {
+        if (GameManager.Instance.GameState != GameState.World) return;
+        
         var sharedData = go.GetComponent<SharedData>();
         if (sharedData == null)
         {

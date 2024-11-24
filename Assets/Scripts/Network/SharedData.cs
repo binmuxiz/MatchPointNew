@@ -18,9 +18,13 @@ public class SharedData: NetworkBehaviour
     
     public static bool Trigger { get; private set; } = false;
 
+    public static bool VoteDoneTrigger { get; private set; } = false;
+    public static bool BalanceGameTrigger { get; private set; } = false;
+    
     
     // 사랑의 작대기 key: 선택하는사람, value: 선택된사람 UserId
     public static Dictionary<string, string> LoveDict { get; } = new();
+    
     
     private void Awake()    
     {
@@ -64,14 +68,24 @@ public class SharedData: NetworkBehaviour
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void RpcSetVoteDoneTrigger(bool flag)
+    {
+        VoteDoneTrigger = flag;
+    }
+    
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void RpcSetBalanceGameTrigger(bool flag)
+    {
+        BalanceGameTrigger = flag;
+    }
+    
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     public void RpcVote(string otherId)
     {
         Debug.Log($"RpcVote: {otherId}");
         LoveDict[UserId] = otherId; 
     }
-
-    public void ClearLoveDict()
-    {
-        LoveDict.Clear();
-    }
+    
+    
 }
