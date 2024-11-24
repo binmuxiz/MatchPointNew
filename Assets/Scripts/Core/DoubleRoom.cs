@@ -3,7 +3,6 @@ using Cysharp.Threading.Tasks;
 using Data;
 using UI;
 using UnityEngine;
-using VoiceChat;
 
 public class DoubleRoom: MonoBehaviour
 {

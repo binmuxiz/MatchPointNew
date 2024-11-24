@@ -4,7 +4,6 @@ using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using VoiceChat;
 
 [Serializable]
 public class Participant
@@ -41,7 +40,6 @@ public class GroupRoom: Singleton<GroupRoom>
     [SerializeField] private Participant _voted;
 
 
-    public DefaultVoiceController VoiceController;
 
     public const int CountDown = 3;
 
