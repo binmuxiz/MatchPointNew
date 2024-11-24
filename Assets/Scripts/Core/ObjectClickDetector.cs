@@ -5,6 +5,7 @@ public class ObjectClickDetector: MonoBehaviour
 {
     public Camera _mainCamera;
     public GroupEnter groupEnter;
+    public OtherUserUI OtherUserUI;
     
     private void Start()
     {
@@ -54,24 +55,16 @@ public class ObjectClickDetector: MonoBehaviour
         if (GameManager.Instance.GameState != GameState.World) return;
         
         var sharedData = go.GetComponent<SharedData>();
-        if (sharedData == null)
-        {
-            Debug.LogError("플레이어가 SharedData를 가지고 있지 않음");
-            return;
-        } 
+        if (sharedData == null) return;
+        if (sharedData.UserId == PlayerData.Instance.UserId) return;
         
-        if (sharedData.UserId == PlayerData.Instance.UserId) // 자신을 클릭 
-        {
-            return;
-        }
-        
-        // ShowPlayerSimpleProfile(sharedData.UserId);
+        ShowPlayerSimpleProfile(sharedData.UserId);
     }
     
     
-    // private void ShowPlayerSimpleProfile(string otherId)
-    // {
-    //     Debug.Log($"myId: {PlayerData.Instance.UserId}, otherId: {otherId}");
-    //     otherUserUI.Show(otherId);
-    // }
+    private void ShowPlayerSimpleProfile(string otherId)
+    {
+        Debug.Log($"myId: {PlayerData.Instance.UserId}, otherId: {otherId}");
+        otherUserUI.Show(otherId);
+    }
 }

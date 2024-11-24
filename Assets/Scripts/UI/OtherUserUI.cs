@@ -12,10 +12,10 @@ namespace UI
 
         [SerializeField] private CanvasGroup profileCanvasGroup;
         
-        
         [SerializeField] private CanvasGroup chatCanvasGroup;
         [SerializeField] private CanvasGroup videoMeetingPopupCanvasGroup;
-        
+
+        [SerializeField] private Image profileImage;
         [SerializeField] private TMP_Text nameText;
         [SerializeField] private TMP_Text genderText;
         [SerializeField] private TMP_Text summaryText;
@@ -25,7 +25,9 @@ namespace UI
         [SerializeField] private Button chatButton;
         [SerializeField] private Button videoMeetingButton;
 
-
+        public Sprite[] profileSprites = new Sprite[4];
+        
+        
         [SerializeField] private string otherId;
         [SerializeField] private SimpleProfile _otherProfile;
 

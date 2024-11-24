@@ -14,9 +14,7 @@ public class PlayerController : NetworkBehaviour
     public Animator animator;
     
     
-    [SerializeField] private GameObject manCharacterPrefab;
-    [SerializeField] private GameObject womanCharacterPrefab;
-    
+    [SerializeField] private GameObject[] avatarPrefabList;
 
     private Vector3 inputDirection;
 
@@ -33,11 +31,12 @@ public class PlayerController : NetworkBehaviour
     
         inputDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
 
-        if (animator != null)
-        {
-            bool isMoving = inputDirection != Vector3.zero;
-            animator.SetBool("IsWalking", isMoving);
-        }
+        // 애니메이션 
+        // if (animator != null)
+        // {
+        //     bool isMoving = inputDirection != Vector3.zero;
+        //     animator.SetBool("IsWalking", isMoving);
+        // }
     }
     
     
@@ -97,13 +96,28 @@ public class PlayerController : NetworkBehaviour
     {
         var sh = GetComponent<SharedData>();
 
-        if (string.IsNullOrEmpty(sh.Gender))
-        {
-            await UniTask.WaitUntil(() => !string.IsNullOrEmpty(sh.Gender));
-        }
+        string id = sh.UserId;
+        GameObject avatarPrefab = null;
 
+        switch (id)
+        {
+            case "1":
+                avatarPrefab = avatarPrefabList[0];
+                break;
+            case "2":
+                avatarPrefab = avatarPrefabList[1];
+                break;
+            case "3":
+                avatarPrefab = avatarPrefabList[2];
+                break;
+            case "4":
+                avatarPrefab = avatarPrefabList[3];
+                break;
+            default:
+                avatarPrefab = avatarPrefabList[0];
+                break;
+        }
         
-        GameObject avatarPrefab = sh.Gender == "여자" ? womanCharacterPrefab : manCharacterPrefab;
         
         if (avatarPrefab != null)
         {
@@ -112,17 +126,15 @@ public class PlayerController : NetworkBehaviour
             Debug.Log($"{sh.Gender} 아바타 생성 완료");
             
             // 예: Animator 초기화
-            animator = avatar.GetComponent<Animator>();
-            if (animator != null)
-            {
-                animator.Rebind();  // Animator 상태 초기화
-            }
+            // animator = avatar.GetComponent<Animator>();
+            // if (animator != null)
+            // {
+            //     animator.Rebind();  // Animator 상태 초기화
+            // }
         }
         else
         {
             Debug.LogWarning("아바타 프리팹이 설정되지 않았습니다.");
         }
     }
-
-
 }

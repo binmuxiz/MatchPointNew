@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 3727829737803882353}
   m_Layer: 10
   m_Name: Player
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33,7 +33,7 @@ Transform:
   m_GameObject: {fileID: 3599549571430005328}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 49.3, y: 39.9, z: -66.8}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -92,12 +92,10 @@ MonoBehaviour:
   speed: 42.9
   gravity: -9.81
   verticalVelocity: 0
-  jumpHeight: 3
   direction: {x: 0, y: 0, z: 0}
   cc: {fileID: 0}
   animator: {fileID: 0}
-  manCharacterPrefab: {fileID: 1522820845778135149, guid: 53105c4f970a1fb4f9f913bb56a38a9f, type: 3}
-  womanCharacterPrefab: {fileID: 3943717412683884906, guid: 275f30e3ca98501499a77649b29fb136, type: 3}
+  avatarPrefabList: []
 --- !u!114 &5214673859124573582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,13 +129,13 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 11.81
-  m_Radius: 3
+  m_Height: 2.05
+  m_Radius: 0.59
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 6.11, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1251346010590307825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,7 +183,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Animator: {fileID: 8701789423956822673}
-  TotalWords: 1
+  TotalWords: 0
   ApplyTiming: 2
   SyncSettings: 79
   StateHashes: 000000002b1a167c794069556bd5a32d398fdc04
