@@ -6,7 +6,7 @@ namespace Player
 {
     public class ThirdPersonView : NetworkBehaviour
     {
-        public float speed = 10;        // 이동 속도
+        public float speed = 140;        // 이동 속도
         public float gravity = -9.81f;   // 중력 값 설정
         public float verticalVelocity = 0;  // 현재 캐릭터의 수직 속도
         public float rotationSpeed = 4; // 회전 속도 

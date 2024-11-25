@@ -4,7 +4,6 @@ using UnityEngine;
 public class ObjectClickDetector: MonoBehaviour
 {
     public Camera _mainCamera;
-    public GroupEnter groupEnter;
     public OtherUserUI OtherUserUI;
     
     private void Start()
@@ -36,19 +35,9 @@ public class ObjectClickDetector: MonoBehaviour
                 Debug.Log("player clicked");
                 HandlePlayerClicked(go);
             }
-            else if (go.CompareTag("GroupMeeting"))
-            {
-                Debug.Log("GroupMeetingGameObject");
-                HandleGroupMeetingObjectClicked(go);
-            }
         }
     }
 
-
-    private void HandleGroupMeetingObjectClicked(GameObject go)
-    {
-        groupEnter.ShowUI();
-    }
 
     private void HandlePlayerClicked(GameObject go)
     {
