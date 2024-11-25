@@ -18236,7 +18236,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8383344148730722992, guid: 9eb85e4633b7e44f89c50c1b5fbb9760, type: 3}
       propertyPath: m_text
-      value: Couple Mathcing Platform
+      value: Couple Matching Platform
       objectReference: {fileID: 0}
     - target: {fileID: 8383344148730722992, guid: 9eb85e4633b7e44f89c50c1b5fbb9760, type: 3}
       propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
@@ -30055,7 +30055,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mainCamera: {fileID: 692989693}
-  groupEnter: {fileID: 0}
   OtherUserUI: {fileID: 0}
 --- !u!1001 &985466203
 PrefabInstance:

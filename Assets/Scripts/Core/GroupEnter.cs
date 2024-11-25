@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Ricimi;
 using UI;
 using UnityEngine;
 using UnityEngine.UI;
@@ -42,10 +43,11 @@ public class GroupEnter: MonoBehaviour
 
         RoomItem roomItem = newItem.GetComponent<RoomItem>();
         roomItem.SetRoomItem(info);
-        
+
+        Button button = newItem.transform.GetChild(0).GetComponent<Button>();
+        // Button button = newItem.GetComponent<Button>();
         
         // Button 컴포넌트의 클릭 이벤트 등록
-        Button button = newItem.GetComponent<Button>();
         button.onClick.AddListener(() => OnItemClicked(roomItem));
         
     }
@@ -54,5 +56,8 @@ public class GroupEnter: MonoBehaviour
     {
         RoomInfo roomInfo = roomItem.roomInfo;
         GameManager.Instance.EnterGroupRoom(roomInfo.roomId, roomInfo.maxPlayerCount);
+
+        Popup popup = GetComponent<Popup>();
+        popup.Close();
     }
 }
