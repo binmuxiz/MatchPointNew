@@ -44,6 +44,8 @@ namespace Core
                 GameManager.Instance.EnterWorld();
                 Destroy(parentCanvas.gameObject);
             }
+            
+            //todo 프로필 세팅 캔버스 띄우기
         }
     }
 }

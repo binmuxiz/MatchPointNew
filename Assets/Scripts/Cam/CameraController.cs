@@ -21,7 +21,8 @@ public class CameraController: Singleton<CameraController>
 
     public void SetWorldCamera(Transform camFollowTarget)
     {
-        brain.enabled = false;
+        Debug.Log("Set World Camera");
+        brain.enabled = true;
 
         cinemachineCamera.Follow = camFollowTarget.transform;
         
