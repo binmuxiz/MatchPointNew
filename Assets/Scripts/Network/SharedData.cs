@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Fusion;
+using Player;
 using UnityEngine;
 
 public class SharedData: NetworkBehaviour
@@ -35,12 +36,21 @@ public class SharedData: NetworkBehaviour
     public override void Spawned()
     {
         Debug.Log("SharedData Spawned");
-        
         RunnerController.AddSharedData(this);
-        
-        if (!HasStateAuthority) return;
 
-        Instance = this;
+        if (HasStateAuthority)
+        {
+            CameraController.Instance.SetWorldCamera(transform); 
+            Instance = this;
+        
+            GetComponent<NetworkTransform>().enabled = true;
+            
+            string id = PlayerData.Instance.UserId;
+            string name = PlayerData.Instance.Profile.user.name;
+            string gender = PlayerData.Instance.Profile.user.gender;
+            SetUser(id, name, gender);
+        }
+        AvatarSetter.Instance.SetAvatar(transform, UserId);
     }
 
     public override void Despawned(NetworkRunner runner, bool hasState)
@@ -53,6 +63,7 @@ public class SharedData: NetworkBehaviour
 
     public void SetUser(string id, string name, string gender)
     {
+        Debug.Log("SetUser");
         if (HasStateAuthority)
         {
             UserId = id;

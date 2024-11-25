@@ -73,10 +73,7 @@ public class RunnerController : MonoBehaviour, INetworkRunnerCallbacks
             
             WaitUntilSpawn(networkSpawnOp);
             
-            string id = PlayerData.Instance.UserId;
-            string name = PlayerData.Instance.Profile.user.name;
-            string gender = PlayerData.Instance.Profile.user.gender;
-            SharedData.Instance.SetUser(id, name, gender);
+
         }
     }
 
