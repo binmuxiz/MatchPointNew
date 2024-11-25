@@ -1,11 +1,14 @@
 ﻿using System.Collections;
-using System.Xml;
+using Cam;
 using Unity.Cinemachine;
 using UnityEngine;
 
 public class CameraController: Singleton<CameraController>
 {
     public CinemachineBrain brain;
+
+    public CinemachineCamera cinemachineCamera;
+    
 
     private void Awake()
     {
@@ -16,7 +19,19 @@ public class CameraController: Singleton<CameraController>
     }
 
 
+    public void SetWorldCamera(Transform camFollowTarget)
+    {
+        brain.enabled = false;
+
+        cinemachineCamera.Follow = camFollowTarget.transform;
+        
+        // camFollow.target = camPosition;
+        // camRotate.enabled = true;
+        // camFollow.enabled = true;
+    }
     
+    
+
     public void SetGroupMeetingRoomCamera()  
     {
         // 그룹룸 카메라 고정

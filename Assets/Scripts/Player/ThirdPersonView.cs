@@ -1,20 +1,23 @@
-﻿using Cysharp.Threading.Tasks;
-using Fusion;
-using Player;
+﻿using Fusion;
 using UnityEngine;
-using Vector3 = UnityEngine.Vector3;
 
-public class PlayerController : NetworkBehaviour
+namespace Player
 {
-    [SerializeField] private float speed = 10;
-    [SerializeField] private float gravity = -9.81f;  // 중력 값 설정
-    [SerializeField] private float verticalVelocity = 0;  // 현재 캐릭터의 수직 속도
+    public class ThirdPersonView : NetworkBehaviour
+    {
+   public float speed = 10;        // 이동 속도
+    public float gravity = -9.81f;   // 중력 값 설정
+    public float verticalVelocity = 0;  // 현재 캐릭터의 수직 속도
+    public float rotationSpeed = 200f; // 회전 속도 
     
     public Vector3 direction;
+    public float mx = 0f;
+
     public CharacterController cc;
     public Animator animator;
 
     private Vector3 inputDirection;
+    private float inputMouseX;
 
 
     private void Awake()
@@ -28,6 +31,8 @@ public class PlayerController : NetworkBehaviour
         if (!HasStateAuthority) return;
     
         inputDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
+        inputDirection = Camera.main.transform.TransformDirection(inputDirection);
+        inputMouseX = Input.GetAxis("Mouse X");
 
         // 애니메이션 
         // if (animator != null)
@@ -36,6 +41,8 @@ public class PlayerController : NetworkBehaviour
         //     animator.SetBool("IsWalking", isMoving);
         // }
     }
+    
+    
     
     
     public override void FixedUpdateNetwork()
@@ -65,17 +72,25 @@ public class PlayerController : NetworkBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, RunnerController.Runner.DeltaTime * 10f);  // 부드러운 회전
         }
+        
+        
+        // 회전
+        mx += inputMouseX * rotationSpeed * Time.deltaTime;
+        transform.eulerAngles = new Vector3(0f, mx, 0f);
     }
     
-
+    
+    
+    
     public override void Spawned()
     {
         GetComponent<NetworkTransform>().enabled = true;
         
         if (HasStateAuthority) {
-                CameraController.Instance.SetGroupMeetingRoomCamera(); 
+            CameraController.Instance.SetWorldCamera(transform); 
         }
         
         AvatarSetter.Instance.SetAvatar(transform, SharedData.Instance.UserId);
+    }
     }
 }

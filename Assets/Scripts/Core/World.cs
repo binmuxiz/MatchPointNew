@@ -1,6 +1,4 @@
-﻿using Data;
-using DG.Tweening;
-using Fusion;
+﻿using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,12 +8,8 @@ using UnityEngine.UI;
 public class World: Singleton<World>
 {
 
-
-    [SerializeField] private MyRoom myRoom;
-
-    
     [Header("UI")] 
-    public GameObject worldUIGO;
+    public GameObject canvas;
     [SerializeField] private RectTransform topBar;  //상단바 
 
     [Header("My Info")] 
@@ -23,23 +17,21 @@ public class World: Singleton<World>
     [SerializeField] private TMP_Text myNameText;
 
     [Header("ProfileSprites")] 
-    [SerializeField] private Sprite[] userSprites;  //은빈, 민주, 민준, 동섭 순 
+    [SerializeField] private Sprite[] profileSprites;  //은빈, 민주, 민준, 동섭 순 
 
-    [Header("Buttons")] 
-    public Button profileButton; 
-    public Button chatButton;
-    
     
     private void Awake()
     {
-        //버튼 리스너 연결 
+        if (profileSprites.Length != 4)
+        {
+            Debug.LogError("프로필 스프라이트 초기화 안함");
+        }
     }
         
         
     private void Start()
     {
-        worldUIGO.SetActive(false);
-        topBar.anchoredPosition = new Vector2(0, 115);
+        HideWorldUI();
     }
 
 
@@ -47,7 +39,7 @@ public class World: Singleton<World>
 
     public void Enter()
     {
-        worldUIGO.SetActive(true);
+        canvas.SetActive(true);
 
         SetProfile();
         ShowWorldUI();
@@ -64,16 +56,43 @@ public class World: Singleton<World>
         }
         
         // TODO ID별로 서로 다른 이미지 삽입
-        
+        Sprite profileSprite = profileSprites[0];
+        string userId = PlayerData.Instance.UserId;
+        switch (userId)
+        {
+            case "1":
+                profileSprite = profileSprites[0];
+                break;
+            case "2":
+                profileSprite = profileSprites[1];
+                break;
+            case "3":
+                profileSprite = profileSprites[2];
+                break;
+            case "4":
+                profileSprite = profileSprites[3];
+                break;
+            default:
+                profileSprite = profileSprites[0];
+                break;
+        }
+
+        profileImage.sprite = profileSprite;
         myNameText.text = PlayerData.Instance.Profile.user.name;
     }
 
     private void ShowWorldUI()
     {
-        worldUIGO.SetActive(true);
+        canvas.SetActive(true);
         
         // 목표 위치로 이동 (예: y축 0)
         topBar.DOAnchorPos(new Vector2(0, 0), 0.5f)
             .SetEase(Ease.OutBounce); // 애니메이션 이징 설정
+    }
+
+    private void HideWorldUI()
+    {
+        canvas.SetActive(false);
+        topBar.anchoredPosition = new Vector2(0, 115);
     }
 }
