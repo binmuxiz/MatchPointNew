@@ -33,6 +33,8 @@ namespace Player
             if (avatarPrefab != null)
             {
                 GameObject avatar = Instantiate(avatarPrefab, parent);
+                // parent.position = new Vector3(parent.position.x, 1, parent.position.z);
+
 
                 // 예: Animator 초기화
                 // animator = avatar.GetComponent<Animator>();

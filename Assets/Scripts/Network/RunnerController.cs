@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks.Triggers;
 using Fusion;
 using Fusion.Sockets;
 using UnityEngine;
@@ -58,9 +59,11 @@ public class RunnerController : MonoBehaviour, INetworkRunnerCallbacks
             {
                 case GameState.World:
                     spawnPosition = GameManager.Instance.worldSpawnPosition.position;
+                    Debug.Log($"worldSpawnPosition => {spawnPosition}");
                     break;
                 case GameState.Group:
                     spawnPosition = GameManager.Instance.groupRoomSpwanPosition.position;
+                    Debug.Log($"groupRoomSpawnPosition => {spawnPosition}");
                     break;
                 case GameState.Double:
                     spawnPosition = Vector3.zero;
@@ -72,8 +75,6 @@ public class RunnerController : MonoBehaviour, INetworkRunnerCallbacks
             var networkSpawnOp = Runner.SpawnAsync(playerPrefab, spawnPosition, Quaternion.identity, player);
             
             WaitUntilSpawn(networkSpawnOp);
-            
-
         }
     }
 

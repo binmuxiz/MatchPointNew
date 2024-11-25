@@ -43,8 +43,6 @@ public class SharedData: NetworkBehaviour
             CameraController.Instance.SetWorldCamera(transform); 
             Instance = this;
         
-            GetComponent<NetworkTransform>().enabled = true;
-            
             string id = PlayerData.Instance.UserId;
             string name = PlayerData.Instance.Profile.user.name;
             string gender = PlayerData.Instance.Profile.user.gender;

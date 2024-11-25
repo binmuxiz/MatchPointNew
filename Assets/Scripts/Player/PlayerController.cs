@@ -73,7 +73,7 @@ public class PlayerController : NetworkBehaviour
         GetComponent<NetworkTransform>().enabled = true;
         
         if (HasStateAuthority) {
-                CameraController.Instance.SetGroupMeetingRoomCamera(); 
+            CameraController.Instance.SetGroupMeetingRoomCamera(); 
         }
         
         AvatarSetter.Instance.SetAvatar(transform, SharedData.Instance.UserId);

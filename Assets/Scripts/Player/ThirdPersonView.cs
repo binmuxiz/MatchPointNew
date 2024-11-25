@@ -1,19 +1,21 @@
 ﻿using Fusion;
+using Fusion.Addons.SimpleKCC;
 using UnityEngine;
 
 namespace Player
 {
     public class ThirdPersonView : NetworkBehaviour
     {
-       public float speed = 10;        // 이동 속도
+        public float speed = 10;        // 이동 속도
         public float gravity = -9.81f;   // 중력 값 설정
         public float verticalVelocity = 0;  // 현재 캐릭터의 수직 속도
-        public float rotationSpeed = 200f; // 회전 속도 
+        public float rotationSpeed = 4; // 회전 속도 
         
         public Vector3 direction;
         public float mx = 0f;
 
-        public CharacterController cc;
+        public SimpleKCC SimpleKcc;
+        
         public Animator animator;
 
         private Vector3 inputDirection;
@@ -22,7 +24,7 @@ namespace Player
 
         private void Awake()
         {
-            cc = GetComponent<CharacterController>();
+            SimpleKcc = GetComponent<SimpleKCC>();
         }
         
 
@@ -53,7 +55,7 @@ namespace Player
             direction = inputDirection;
 
             // 중력 적용
-            if (cc.isGrounded)
+            if (SimpleKcc.IsGrounded)
             {
                 verticalVelocity = 0;  // 지면에 붙어있으면 수직 속도를 0으로 설정
             }
@@ -64,19 +66,21 @@ namespace Player
 
             Vector3 move = direction * speed * RunnerController.Runner.DeltaTime;
             move.y = verticalVelocity;  // 수직 속도를 이동 벡터에 추가
-            cc.Move(move);  // 이동
+            SimpleKcc.Move(move);  // 이동
 
             // 회전 (움직임이 있을 때만 회전)
             if (direction != Vector3.zero)
             {
-                Quaternion targetRotation = Quaternion.LookRotation(direction);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, RunnerController.Runner.DeltaTime * 10f);  // 부드러운 회전
+                // Quaternion targetRotation = Quaternion.LookRotation(direction);
+                SimpleKcc.LookRotation.SetLookRotation(direction);
+                
+                    // = Quaternion.Slerp(transform.rotation, targetRotation, RunnerController.Runner.DeltaTime * 10f);  // 부드러운 회전
             }
             
-            
             // 회전
-            mx += inputMouseX * rotationSpeed * Time.deltaTime;
-            transform.eulerAngles = new Vector3(0f, mx, 0f);
+            // mx = inputMouseX * rotationSpeed * Time.deltaTime;
+            SimpleKcc.AddLookRotation(0f, inputMouseX * rotationSpeed);
+            // transform.eulerAngles = new Vector3(0f, mx, 0f);
         }
     }
 }
