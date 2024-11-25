@@ -12,18 +12,17 @@ public class GameManager: Singleton<GameManager>
 {
     public GameState GameState = GameState.Login;
     
-    
     public static NetworkController NetworkController;
     private const string BaseURI = "https://eternal-leopard-hopelessly.ngrok-free.app";
 
-    public Login Login;
-    
-    
     [Header("NetworkRunner")]
-    public Transform groupRoomSpwanPosition;
-    [SerializeField] private GameObject groupRoomRunnerPrefab;
+    public Transform worldSpawnPosition;
+    public GameObject worldRunnerPrefab;
     
-    [SerializeField] private GameObject doubleRoomRunnerPrefab;
+    public Transform groupRoomSpwanPosition;
+    public GameObject groupRoomRunnerPrefab;
+    
+    public GameObject doubleRoomRunnerPrefab;
     
     
     private void Awake()
@@ -31,24 +30,21 @@ public class GameManager: Singleton<GameManager>
         NetworkController = new NetworkController(new HttpClient(BaseURI));
     }
 
-    private void Start()
-    {
-        LoginProcess();
-    }
-
-    public void LoginProcess()
-    {
-        GameState = GameState.Login;
-
-        CameraController.Instance.brain.enabled = false;
-        Login.ShowLoginUI();
-    }
-    
-    
 // 월드 접속 
-    public void EnterWorld()
+    public async void EnterWorld()
     {
         GameState = GameState.World;
+        
+        var args = new StartGameArgs
+        {
+            GameMode = GameMode.Shared,
+            SessionName = "World",
+            PlayerCount = 20,
+        };
+
+        // session 생성/접속 및 플레이어 스폰
+        await SessionManager.Instance.StartSessionAsync(args, worldRunnerPrefab);
+        
         World.Instance.Enter();
     }
     

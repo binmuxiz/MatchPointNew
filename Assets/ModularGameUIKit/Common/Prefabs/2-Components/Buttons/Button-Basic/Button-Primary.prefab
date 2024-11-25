@@ -140,6 +140,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5800413611586808335, guid: eece337a691b9459e86712aaa1c1d7e3, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7719427494324133173, guid: eece337a691b9459e86712aaa1c1d7e3, type: 3}
     m_RemovedGameObjects:

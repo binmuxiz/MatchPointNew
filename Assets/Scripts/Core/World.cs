@@ -9,11 +9,7 @@ using UnityEngine.UI;
 
 public class World: Singleton<World>
 {
-    private const string WorldSessionName = "World";
-    private const int WorldMaxPlayerCount = 20;
 
-    public Transform WorldSpawnPosition;
-    [SerializeField] private GameObject runnerPrefab;
 
     [SerializeField] private MyRoom myRoom;
 
@@ -49,19 +45,8 @@ public class World: Singleton<World>
 
     
 
-    public async void Enter()
+    public void Enter()
     {
-        var args = new StartGameArgs
-        {
-            GameMode = GameMode.Shared,
-            SessionName = WorldSessionName,
-            PlayerCount = WorldMaxPlayerCount,
-        };
-
-        // session 생성/접속 및 플레이어 스폰
-        await SessionManager.Instance.StartSessionAsync(args, runnerPrefab);
-        Debug.Log("접속 및 플레이어 스폰 완료");
-
         worldUIGO.SetActive(true);
 
         SetProfile();

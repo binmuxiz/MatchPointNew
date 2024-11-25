@@ -1,33 +1,27 @@
-using System;
-using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using WebSocketSharp;
 
 public class Login: MonoBehaviour
 {
-    public GameObject loginUIGO;
-    public TMP_InputField idField;
+    public TMP_InputField idInputField;
     public Button loginButton;
+    
+    public Transform parentCanvas;
+    
 
     private void Start()
     {
+        parentCanvas = transform.parent;
+        
         loginButton.onClick.AddListener(OnClickedLoginButton);
     }
 
-    public async void ShowLoginUI()
-    {
-        idField.text = null;
-        
-        await UniTask.Delay(TimeSpan.FromSeconds(1));
-        
-        loginUIGO.SetActive(true);
-    }    
-    
     private async void OnClickedLoginButton()
     {
-        string id = idField.text;
+        string id = idInputField.text;
 
         if (id.IsNullOrEmpty()) return;
         
@@ -36,7 +30,7 @@ public class Login: MonoBehaviour
         if (PlayerData.Instance.UserId != null)
         {
             GameManager.Instance.EnterWorld();
-            loginUIGO.SetActive(false);    
+            Destroy(parentCanvas.gameObject);
         }
     }
 }

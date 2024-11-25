@@ -57,7 +57,7 @@ public class RunnerController : MonoBehaviour, INetworkRunnerCallbacks
             switch (GameManager.Instance.GameState)
             {
                 case GameState.World:
-                    spawnPosition = World.Instance.WorldSpawnPosition.position;
+                    spawnPosition = GameManager.Instance.worldSpawnPosition.position;
                     break;
                 case GameState.Group:
                     spawnPosition = GameManager.Instance.groupRoomSpwanPosition.position;

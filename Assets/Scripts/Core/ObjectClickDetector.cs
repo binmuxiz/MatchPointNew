@@ -65,6 +65,6 @@ public class ObjectClickDetector: MonoBehaviour
     private void ShowPlayerSimpleProfile(string otherId)
     {
         Debug.Log($"myId: {PlayerData.Instance.UserId}, otherId: {otherId}");
-        otherUserUI.Show(otherId);
+        // otherUserUI.Show(otherId);
     }
 }
