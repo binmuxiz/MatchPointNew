@@ -7656,8 +7656,8 @@ GameObject:
   - component: {fileID: 254525278}
   - component: {fileID: 254525277}
   m_Layer: 0
-  m_Name: TestCamera
-  m_TagString: Untagged
+  m_Name: MeetingRoomCamera
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7670,13 +7670,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 254525275}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 94.8, y: 28.2, z: -144.7}
+  m_LocalRotation: {x: 0.0681166, y: 0.68693644, z: -0.06493462, w: 0.72059834}
+  m_LocalPosition: {x: 28.6, y: 2.27, z: -0.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 275799823}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 10.8, y: 87.26, z: 0}
 --- !u!114 &254525277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8345,6 +8345,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   brain: {fileID: 692989690}
   cinemachineCamera: {fileID: 1515268442}
+  moveCamera: {fileID: 196438162}
+  lockCamera: {fileID: 254525275}
 --- !u!1001 &278576684
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -71342,6 +71344,7 @@ SceneRoots:
   - {fileID: 859541592}
   - {fileID: 1578615615}
   - {fileID: 132594530}
+  - {fileID: 2093793084}
   - {fileID: 429626208}
   - {fileID: 1699483070}
   - {fileID: 5613330586898629979}
@@ -71349,6 +71352,5 @@ SceneRoots:
   - {fileID: 511007302}
   - {fileID: 133273634}
   - {fileID: 275799823}
-  - {fileID: 2093793084}
   - {fileID: 1278293657}
   - {fileID: 379858023}

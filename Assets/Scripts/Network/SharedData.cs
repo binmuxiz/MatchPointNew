@@ -40,7 +40,6 @@ public class SharedData: NetworkBehaviour
 
         if (HasStateAuthority)
         {
-            CameraController.Instance.SetWorldCamera(transform); 
             Instance = this;
         
             string id = PlayerData.Instance.UserId;

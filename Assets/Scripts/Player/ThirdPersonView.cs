@@ -12,14 +12,13 @@ namespace Player
         public float rotationSpeed = 4; // 회전 속도 
         
         public Vector3 direction;
-        public float mx = 0f;
 
         public SimpleKCC SimpleKcc;
         
-        public Animator animator;
-
         private Vector3 inputDirection;
         private float inputMouseX;
+        
+        public Animator animator;
 
 
         private void Awake()
@@ -81,6 +80,14 @@ namespace Player
             // mx = inputMouseX * rotationSpeed * Time.deltaTime;
             SimpleKcc.AddLookRotation(0f, inputMouseX * rotationSpeed);
             // transform.eulerAngles = new Vector3(0f, mx, 0f);
+        }
+
+        public override void Spawned()
+        {
+            if (HasStateAuthority)
+            { 
+                CameraController.Instance.SetWorldCamera(transform); 
+            }
         }
     }
 }
