@@ -58,6 +58,6 @@ public class GroupEnter: MonoBehaviour
         Popup popup = GetComponent<Popup>();
         popup.Close();
         
-        GameManager.Instance.EnterGroupRoom(roomInfo.roomId, roomInfo.maxPlayerCount);
+        GameManager.Instance.EnterGroupRoom(roomInfo);
     }
 }

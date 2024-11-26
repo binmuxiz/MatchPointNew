@@ -24,12 +24,10 @@ public class GameManager: Singleton<GameManager>
     
     public GameObject doubleRoomRunnerPrefab;
 
-    public GameObject groupRoomPrefab;
-    public GameObject doubleRoomPrefab;
-    
-    
+
     private void Awake()
     {
+        
         NetworkController = new NetworkController(new HttpClient(BaseURI));
     }
 
@@ -54,23 +52,20 @@ public class GameManager: Singleton<GameManager>
     
     
 // 그룹 미팅 룸 조인 
-    public async void EnterGroupRoom(string roomId, int maxPlayerCount)
+    public async void EnterGroupRoom(RoomInfo roomInfo)
     {
         GameState = GameState.Group;
         
         var args = new StartGameArgs
         {
             GameMode = GameMode.Shared,
-            SessionName = roomId,
-            PlayerCount = maxPlayerCount,
+            SessionName = roomInfo.roomId,
+            PlayerCount = roomInfo.maxPlayerCount,
         };
 
         await SessionManager.Instance.StartSessionAsync(args, groupRoomRunnerPrefab);
 
-        GameObject go = Instantiate(groupRoomPrefab);
-        GroupRoom groupRoom = go.GetComponent<GroupRoom>();
-        groupRoom.maxPlayers = maxPlayerCount;
-        groupRoom.Enter();
+        GroupRoom.Instance.Enter(roomInfo);
     }
     
     
@@ -95,9 +90,6 @@ public class GameManager: Singleton<GameManager>
 
         await SessionManager.Instance.StartSessionAsync(args, doubleRoomRunnerPrefab);
 
-        GameObject go = Instantiate(doubleRoomPrefab);
-        DoubleRoom doubleRoom = go.GetComponent<DoubleRoom>();
-        
-        doubleRoom.Enter();
+        DoubleRoom.Instance.Enter();
     }
 }

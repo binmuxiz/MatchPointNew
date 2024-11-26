@@ -1,15 +1,23 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class DoubleRoom: MonoBehaviour
+public class DoubleRoom: Singleton<DoubleRoom>
 {
     public Canvas canvas;
-    
-    
-    
+
+    private void Start()
+    {
+        canvas.enabled = false;
+    }
+
     public async void Enter()
     {
+        canvas.enabled = true;
+        
         await Process();
+        
+        canvas.enabled = false;
+
     }
     
     private async UniTask Process()
@@ -18,13 +26,6 @@ public class DoubleRoom: MonoBehaviour
 
 
     }
-    
-    
-    
-    
-    
-    
-    
     
     
     
