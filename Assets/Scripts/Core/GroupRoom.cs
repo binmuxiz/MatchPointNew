@@ -15,7 +15,7 @@ public class GroupRoom: Singleton<GroupRoom>
     public RoomInfo roomInfo;
     public int maxPlayers;
 
-    private const int CountDown = 4;
+    private const int CountDown = 2;
 
     private bool initalized = false;
     
@@ -73,18 +73,18 @@ public class GroupRoom: Singleton<GroupRoom>
         Destroy(waitingPanel.gameObject);
         Debug.Log("---------------시작------------------------");
         
-        InitializePlayerProfiles().Forget();
-        await Fader.FadeIn(loadingCanvasGroup, 1f);
-        await UniTask.Delay(1000); // 대기화면 
-        await Fader.FadeOut(loadingCanvasGroup, 1f);
+        // InitializePlayerProfiles().Forget();
+        // await Fader.FadeIn(loadingCanvasGroup, 1f);
+        // await UniTask.Delay(1000); // 대기화면 
+        // await Fader.FadeOut(loadingCanvasGroup, 1f);
 
-        await UniTask.WaitUntil(() => initalized);
+        // await UniTask.WaitUntil(() => initalized);
         
         // 보이스챗 켜기
-        await UniTask.Delay(TimeSpan.FromSeconds(CountDown));
+        // await UniTask.Delay(TimeSpan.FromSeconds(CountDown));
 
         
-        // await GoToDoubleRoom();
+        await GoToDoubleRoom();
         // GoToWorld();
 
     }
