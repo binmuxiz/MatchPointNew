@@ -1,30 +1,34 @@
-﻿using UI;
+﻿using ExitGames.Client.Photon;
+using UI;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class ObjectClickDetector: MonoBehaviour
 {
-    public Camera _mainCamera;
-    public GroupEnter groupEnter;
     public OtherUserUI OtherUserUI;
     
-    private void Start()
-    {
-        _mainCamera = Camera.main;
-    }
 
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            DetectClick();                
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                Debug.Log("UI Clicked");
+            }
+            else
+            {
+                DetectClick();
+            }
         }
     }
 
     private void DetectClick()
     {
-        if (_mainCamera == null) _mainCamera = Camera.main;
+        Camera cam = Camera.main;
+        if (cam == null) return;
         
-        Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
+        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit))
@@ -33,22 +37,12 @@ public class ObjectClickDetector: MonoBehaviour
             
             if (go.CompareTag("Player"))
             {
-                Debug.Log("player clicked");
+                Debug.Log("player clicked");    
                 HandlePlayerClicked(go);
-            }
-            else if (go.CompareTag("GroupMeeting"))
-            {
-                Debug.Log("GroupMeetingGameObject");
-                HandleGroupMeetingObjectClicked(go);
             }
         }
     }
 
-
-    private void HandleGroupMeetingObjectClicked(GameObject go)
-    {
-        groupEnter.ShowUI();
-    }
 
     private void HandlePlayerClicked(GameObject go)
     {

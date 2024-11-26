@@ -40,16 +40,14 @@ public class SharedData: NetworkBehaviour
 
         if (HasStateAuthority)
         {
-            CameraController.Instance.SetWorldCamera(transform); 
             Instance = this;
         
-            GetComponent<NetworkTransform>().enabled = true;
-            
             string id = PlayerData.Instance.UserId;
             string name = PlayerData.Instance.Profile.user.name;
             string gender = PlayerData.Instance.Profile.user.gender;
             SetUser(id, name, gender);
         }
+        
         AvatarSetter.Instance.SetAvatar(transform, UserId);
     }
 

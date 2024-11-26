@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using Cam;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -8,6 +7,9 @@ public class CameraController: Singleton<CameraController>
     public CinemachineBrain brain;
 
     public CinemachineCamera cinemachineCamera;
+
+    public GameObject moveCamera;
+    public GameObject lockCamera;
     
 
     private void Awake()
@@ -16,12 +18,19 @@ public class CameraController: Singleton<CameraController>
         {
             brain.enabled = false;
         }
+
+        moveCamera.SetActive(true);
+        lockCamera.SetActive(false);
     }
 
 
     public void SetWorldCamera(Transform camFollowTarget)
     {
-        brain.enabled = false;
+        moveCamera.SetActive(true);
+        lockCamera.SetActive(false);
+        
+        Debug.Log("Set World Camera");
+        brain.enabled = true;
 
         cinemachineCamera.Follow = camFollowTarget.transform;
         
@@ -34,45 +43,9 @@ public class CameraController: Singleton<CameraController>
 
     public void SetGroupMeetingRoomCamera()  
     {
+        moveCamera.SetActive(false);
+        lockCamera.SetActive(true);
         // 그룹룸 카메라 고정
-        brain.enabled = false;
-
-        transform.position = new Vector3(94, 28, -144);
-    }
-    
-    public IEnumerator SetCinemachineCameraTarget(Transform transform)
-    {
-        brain.enabled = true;
-
-        yield return new WaitForEndOfFrame();
-        
-        CinemachineCamera cinemachineCamera = FindAnyObjectByType<CinemachineCamera>();
-
-        if (cinemachineCamera != null)
-        {
-            Transform camFollow = null;
-            foreach (Transform child in transform.GetComponentsInChildren<Transform>())
-            {
-                if (child.CompareTag("CamFollow"))
-                {
-                    camFollow = child;
-                    break; // 원하는 자식 오브젝트를 찾으면 반복문 종료
-                }
-            }
-
-            if (camFollow != null)
-            {
-                cinemachineCamera.Follow = camFollow;
-                Debug.Log($"Follow target 설젇: {camFollow.name}");
-            }
-            else
-            {
-                Debug.LogError("CamFollow 태그를 가진 자식 오브젝트를 찾을 수 없습니다.");
-            }
-        }
-        else
-        {
-            Debug.LogError("CinemachineCamera를 찾을 수 없습니다.");
-        }
+        // brain.enabled = false;
     }
 }

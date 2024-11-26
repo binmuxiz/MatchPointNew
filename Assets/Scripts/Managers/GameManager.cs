@@ -23,6 +23,8 @@ public class GameManager: Singleton<GameManager>
     public GameObject groupRoomRunnerPrefab;
     
     public GameObject doubleRoomRunnerPrefab;
+
+    public GameObject groupRoomPrefab;
     
     
     private void Awake()
@@ -63,9 +65,15 @@ public class GameManager: Singleton<GameManager>
         };
 
         await SessionManager.Instance.StartSessionAsync(args, groupRoomRunnerPrefab);
-        
-        GroupRoom.Instance.Enter(maxPlayerCount);
+
+        GameObject go = Instantiate(groupRoomPrefab);
+        GroupRoom groupRoom = go.GetComponent<GroupRoom>();
+        groupRoom.maxPlayers = maxPlayerCount;
+        groupRoom.Enter();
     }
+    
+    
+    
 
 // 1:1 미팅 룸 조인        
     public async void EnterDoubleRoom(string myId, string otherId)

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Ricimi;
 using UI;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,12 +7,6 @@ using UnityEngine.UI;
 
 public class GroupEnter: MonoBehaviour
 {
-    public GameObject groupEnterUIGO;
-    public CanvasGroup CanvasGroup;
-    
-    [SerializeField] private Button closeButton;   // 리스트 UI 닫기 버튼
-    // [SerializeField] private Button createRoomButton;   // 방생성 버튼
-
     
     [Header("GroupMeeting List UI")]
     [SerializeField] private GameObject itemPrefab; // 생성할 프리팹
@@ -21,14 +16,6 @@ public class GroupEnter: MonoBehaviour
 
     private List<RoomInfo> roomList = new List<RoomInfo>();
     
-
-    private void Awake()
-    {
-        Fader.FadeOut(CanvasGroup);
-        groupEnterUIGO.SetActive(true);
-        
-        closeButton.onClick.AddListener(HideUI);
-    }
 
     private void Start()
     {
@@ -45,30 +32,22 @@ public class GroupEnter: MonoBehaviour
         }        
     }
 
-
-    public void ShowUI()
-    {
-        Fader.FadeIn(CanvasGroup);
-    }
-
-    private void HideUI()
-    {
-        Fader.FadeOut(CanvasGroup);
-    }
-
+    
     
     // 아이템 추가 메서드
     private void AddItem(RoomInfo info)
     {
+        Debug.Log("AddItem");
         // Prefab 인스턴스화
         GameObject newItem = Instantiate(itemPrefab, content);
 
         RoomItem roomItem = newItem.GetComponent<RoomItem>();
         roomItem.SetRoomItem(info);
-        
+
+        Button button = newItem.transform.GetChild(0).GetComponent<Button>();
+        // Button button = newItem.GetComponent<Button>();
         
         // Button 컴포넌트의 클릭 이벤트 등록
-        Button button = newItem.GetComponent<Button>();
         button.onClick.AddListener(() => OnItemClicked(roomItem));
         
     }
@@ -76,7 +55,9 @@ public class GroupEnter: MonoBehaviour
     private void OnItemClicked(RoomItem roomItem)
     {
         RoomInfo roomInfo = roomItem.roomInfo;
+        Popup popup = GetComponent<Popup>();
+        popup.Close();
+        
         GameManager.Instance.EnterGroupRoom(roomInfo.roomId, roomInfo.maxPlayerCount);
-        HideUI();
     }
 }
