@@ -1,5 +1,7 @@
-﻿using UI;
+﻿using ExitGames.Client.Photon;
+using UI;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class ObjectClickDetector: MonoBehaviour
 {
@@ -10,7 +12,14 @@ public class ObjectClickDetector: MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            DetectClick();                
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                Debug.Log("UI Clicked");
+            }
+            else
+            {
+                DetectClick();
+            }
         }
     }
 

@@ -1,5 +1,6 @@
 ﻿using Ricimi;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Core
 {
@@ -12,15 +13,22 @@ namespace Core
 
         private void OnMouseDown()
         {
-            if (GameManager.Instance.GameState == GameState.Group)
+            if (EventSystem.current.IsPointerOverGameObject())
             {
-                return;
+                Debug.Log("UI Clicked");
             }
-            
-            if (gameObject == this.gameObject)
+            else
             {
-                Debug.Log("자기 자신 클릭됨!");
-                OpenPopup();
+                if (GameManager.Instance.GameState == GameState.Group)
+                {
+                    return;
+                }
+            
+                if (gameObject == this.gameObject)
+                {
+                    Debug.Log("자기 자신 클릭됨!");
+                    OpenPopup();
+                }
             }
         }
         
