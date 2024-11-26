@@ -11,7 +11,7 @@ public class GroupRoom: MonoBehaviour
 
     public bool enableAIBot;
     public bool enabledVote = false;
-    public const int CountDown = 10;
+    public const int CountDown = 2;
 
     public string votedName = null;
     
@@ -52,8 +52,8 @@ public class GroupRoom: MonoBehaviour
     
     public async void Enter()
     {
-        await Fader.FadeIn(loadingCanvasGroup, 1f);
-        await UniTask.Delay(4000); // 대기화면 
+        // await Fader.FadeIn(loadingCanvasGroup, 1f);
+        // await UniTask.Delay(1000); // 대기화면 
         await Fader.FadeOut(loadingCanvasGroup, 1f);
         
         this.waitingPanel = Instantiate(panelWaitingPrefab, canvas.transform, false).GetComponent<WaitingPanel>();
@@ -63,6 +63,9 @@ public class GroupRoom: MonoBehaviour
         
         Debug.Log("Start----------------------------------------");
 
+        await UniTask.Delay(4000);
+        GameManager.Instance.EnterDoubleRoom("1", "2");
+        Destroy(this.gameObject);
     }
     
     private async UniTask MonitorPlayerCountAsync(int maxPlayerCount)
@@ -126,7 +129,7 @@ public class GroupRoom: MonoBehaviour
     //
     //         if (Physics.Raycast(ray, out hit))
     //         {
-    //             GameObject go = hit.collider.gameObject;
+    //             GameObject go = hit.collider.gameObject; 
     //         
     //             if (go.CompareTag("AIBot"))
     //             {

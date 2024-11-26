@@ -25,6 +25,7 @@ public class GameManager: Singleton<GameManager>
     public GameObject doubleRoomRunnerPrefab;
 
     public GameObject groupRoomPrefab;
+    public GameObject doubleRoomPrefab;
     
     
     private void Awake()
@@ -94,6 +95,9 @@ public class GameManager: Singleton<GameManager>
 
         await SessionManager.Instance.StartSessionAsync(args, doubleRoomRunnerPrefab);
 
-        DoubleRoom.Instance.Enter();
+        GameObject go = Instantiate(doubleRoomPrefab);
+        DoubleRoom doubleRoom = go.GetComponent<DoubleRoom>();
+        
+        doubleRoom.Enter();
     }
 }

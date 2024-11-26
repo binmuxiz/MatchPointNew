@@ -1,20 +1,16 @@
-using System;
 using Cysharp.Threading.Tasks;
-using Data;
-using UI;
 using UnityEngine;
 
-public class DoubleRoom: Singleton<DoubleRoom>
+public class DoubleRoom: MonoBehaviour
 {
+    public Canvas canvas;
+    
     
     
     public async void Enter()
     {
         await Process();
     }
-    
-    
-    
     
     private async UniTask Process()
     {
@@ -23,7 +19,17 @@ public class DoubleRoom: Singleton<DoubleRoom>
 
     }
     
-        // private async void SendAudioDataToServer()
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    // private async void SendAudioDataToServer()
     // {
     //     Debug.Log("Sending audio data to server");
     //
