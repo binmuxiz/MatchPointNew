@@ -3,9 +3,11 @@ using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
-public class GroupRoom: Singleton<GroupRoom>
+public class GroupRoom: MonoBehaviour
 {
-    public Camera mainCamera;
+    public int maxPlayers;
+
+    
     public bool enableAIBot;
     public bool enabledVote = false;
     public const int CountDown = 3;
@@ -33,7 +35,6 @@ public class GroupRoom: Singleton<GroupRoom>
 
     private void Awake()
     {
-        mainCamera = Camera.main;
         groupRoomUIGO.SetActive(false);
         waitingUIGO.SetActive(false);
     }
@@ -44,8 +45,7 @@ public class GroupRoom: Singleton<GroupRoom>
         
         if (Input.GetMouseButtonDown(0))
         {
-            if (mainCamera == null) mainCamera = Camera.main;
-            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit))
@@ -159,10 +159,10 @@ public class GroupRoom: Singleton<GroupRoom>
     }
     
 
-    public async void Enter(int maxPlayerCount)
+    public async void Enter()
     {
         waitingUIGO.SetActive(true);
-        await MonitorPlayerCountAsync(maxPlayerCount);
+        await MonitorPlayerCountAsync(maxPlayers);
         waitingUIGO.SetActive(false);
         
         Process();

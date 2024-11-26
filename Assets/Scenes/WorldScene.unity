@@ -3632,6 +3632,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 133273634}
+  - component: {fileID: 133273635}
   m_Layer: 0
   m_Name: GameControllers
   m_TagString: Untagged
@@ -3660,6 +3661,20 @@ Transform:
   - {fileID: 1182785240}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &133273635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 133273633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41bcf0823daa4984b3ec1027465af521, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cursorTexture: {fileID: 2800000, guid: b859424629348924182437c08149e3de, type: 3}
+  targetTag: Player
 --- !u!1001 &142177425
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30056,7 +30071,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31dd4e78d0e44e64b94d71e76dd2831b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mainCamera: {fileID: 692989693}
   OtherUserUI: {fileID: 0}
 --- !u!1001 &985466203
 PrefabInstance:
@@ -45834,6 +45848,7 @@ MonoBehaviour:
   groupRoomSpwanPosition: {fileID: 1413183567}
   groupRoomRunnerPrefab: {fileID: 2607193962398319913, guid: abf2516d375ea2246b891c9ab2005099, type: 3}
   doubleRoomRunnerPrefab: {fileID: 2607193962398319913, guid: e7e2f1d447422064aab602ecdcc9883c, type: 3}
+  groupRoomPrefab: {fileID: 4606173706028452695, guid: 694a01710506be740bdac6a67c47c4ac, type: 3}
 --- !u!114 &1469468967
 MonoBehaviour:
   m_ObjectHideFlags: 0

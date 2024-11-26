@@ -3,13 +3,8 @@ using UnityEngine;
 
 public class ObjectClickDetector: MonoBehaviour
 {
-    public Camera _mainCamera;
     public OtherUserUI OtherUserUI;
     
-    private void Start()
-    {
-        _mainCamera = Camera.main;
-    }
 
     private void Update()
     {
@@ -21,9 +16,10 @@ public class ObjectClickDetector: MonoBehaviour
 
     private void DetectClick()
     {
-        if (_mainCamera == null) _mainCamera = Camera.main;
+        Camera cam = Camera.main;
+        if (cam == null) return;
         
-        Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
+        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit))
@@ -32,7 +28,7 @@ public class ObjectClickDetector: MonoBehaviour
             
             if (go.CompareTag("Player"))
             {
-                Debug.Log("player clicked");
+                Debug.Log("player clicked");    
                 HandlePlayerClicked(go);
             }
         }

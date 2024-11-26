@@ -189,9 +189,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 306507d4543b43c3a960aa0a0e77b498, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 140
   gravity: -9.81
   verticalVelocity: 0
+  rotationSpeed: 4
   direction: {x: 0, y: 0, z: 0}
-  cc: {fileID: 0}
+  SimpleKcc: {fileID: 0}
   animator: {fileID: 0}
