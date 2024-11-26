@@ -42,12 +42,20 @@ public class GroupRoom: MonoBehaviour
     
     private void Awake()
     {
+        if (panelWaitingPrefab == null)
+        {
+            Debug.LogError("The panel waiting prefab is null");
+            return;
+        }
         this.waitingPanel = Instantiate(panelWaitingPrefab, canvas.transform, false).GetComponent<WaitingPanel>();
+        
     }
     
     public async void Enter()
     {
         await MonitorPlayerCountAsync(maxPlayers);
+        Destroy(waitingPanel.gameObject);
+        
         Debug.Log("Start----------------------------------------");
 
     }
@@ -55,8 +63,9 @@ public class GroupRoom: MonoBehaviour
     private async UniTask MonitorPlayerCountAsync(int maxPlayerCount)
     {
         waitingPanel.ActiveCounterMembers();
-        Debug.Log(maxPlayerCount);
+        
         int totalCount = maxPlayerCount;
+        waitingPanel.SetMaxPlayerCnt(totalCount);
     
         while (true)
         {

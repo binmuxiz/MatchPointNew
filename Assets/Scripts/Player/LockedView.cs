@@ -34,7 +34,6 @@ public class LockedView : NetworkBehaviour
         
         inputDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
         inputDirection = Camera.main.transform.TransformDirection(inputDirection);
-        inputMouseX = Input.GetAxis("Mouse X");
 
         // 애니메이션 
         // if (animator != null)

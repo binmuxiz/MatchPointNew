@@ -16,15 +16,7 @@ namespace UI
         public TMP_Text timerText;
 
 
-        private void Start()
-        {
-            counterMembers.SetActive(false);
-            timer.SetActive(false);
-            currentPlayerCnt.text = "";
-            maxPlayerCnt.text = "";
-            timerText.text = "";
-        }
-
+        
         public void ActiveCounterMembers()
         {
             counterMembers.SetActive(true);
