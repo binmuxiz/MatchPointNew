@@ -32,8 +32,8 @@ namespace Player
             if (!HasStateAuthority) return;
         
             inputDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
-            inputDirection = Camera.main.transform.TransformDirection(inputDirection);
-            inputMouseX = Input.GetAxis("Mouse X");
+            // inputDirection = Camera.main.transform.TransformDirection(inputDirection);
+            // inputMouseX = Input.GetAxis("Mouse X");
 
             // 애니메이션 
             // if (animator != null)
@@ -67,19 +67,14 @@ namespace Player
             move.y = verticalVelocity;  // 수직 속도를 이동 벡터에 추가
             SimpleKcc.Move(move);  // 이동
 
-            // 회전 (움직임이 있을 때만 회전)
-            if (direction != Vector3.zero)
-            {
-                // Quaternion targetRotation = Quaternion.LookRotation(direction);
-                SimpleKcc.LookRotation.SetLookRotation(direction);
-                
-                    // = Quaternion.Slerp(transform.rotation, targetRotation, RunnerController.Runner.DeltaTime * 10f);  // 부드러운 회전
-            }
-            
-            // 회전
-            // mx = inputMouseX * rotationSpeed * Time.deltaTime;
-            SimpleKcc.AddLookRotation(0f, inputMouseX * rotationSpeed);
-            // transform.eulerAngles = new Vector3(0f, mx, 0f);
+            // // 회전 (움직임이 있을 때만 회전)
+            // if (direction != Vector3.zero)
+            // {
+            //     SimpleKcc.LookRotation.SetLookRotation(direction);
+            // }
+            //
+            // // 회전
+            // SimpleKcc.AddLookRotation(0f, inputMouseX * rotationSpeed);
         }
 
         public override void Spawned()
