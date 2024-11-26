@@ -83,17 +83,18 @@ namespace Network
             return await _httpClient.SendPostRequestAsync($"/generate_balance_topics", data);
         }
         
-        // 10. 밸런스 게임 조회
+        // 10. 밸런스 게임 목록 조회
+        public async UniTask<Response> GetBalanceGameList()
+        {
+            return await _httpClient.SendGetRequestAsync($"/get-balance-games");
+        }
+        
+        // 11. 밸런스 게임 조회
         public async UniTask<Response> GetBalanceGame(string gameId)
         {
             return await _httpClient.SendGetRequestAsync($"/get-balance-game/{gameId}");
         }
         
-        // 11. 밸런스 게임 목록 조회
-        public async UniTask<Response> GetBalanceGameList()
-        {
-            return await _httpClient.SendGetRequestAsync($"/get-balance-games");
-        }
     }
 }
 
