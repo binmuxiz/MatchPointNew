@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using TMPro;
 using UI;
@@ -30,6 +29,9 @@ public class GroupRoom: MonoBehaviour
 
     [SerializeField] private TMP_Text timerText;
 
+    [Header("Loading")] 
+    public CanvasGroup loadingCanvasGroup;
+    
     [Header("Waiting")] 
     public GameObject panelWaitingPrefab;
     public WaitingPanel waitingPanel;
@@ -45,14 +47,17 @@ public class GroupRoom: MonoBehaviour
         if (panelWaitingPrefab == null)
         {
             Debug.LogError("The panel waiting prefab is null");
-            return;
         }
-        this.waitingPanel = Instantiate(panelWaitingPrefab, canvas.transform, false).GetComponent<WaitingPanel>();
-        
     }
     
     public async void Enter()
     {
+        await Fader.FadeIn(loadingCanvasGroup, 1f);
+        await UniTask.Delay(4000); // 대기화면 
+        await Fader.FadeOut(loadingCanvasGroup, 1f);
+        
+        this.waitingPanel = Instantiate(panelWaitingPrefab, canvas.transform, false).GetComponent<WaitingPanel>();
+
         await MonitorPlayerCountAsync(maxPlayers);
         Destroy(waitingPanel.gameObject);
         
