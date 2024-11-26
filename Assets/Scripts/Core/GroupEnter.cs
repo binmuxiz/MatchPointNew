@@ -19,10 +19,10 @@ public class GroupEnter: MonoBehaviour
 
     private void Start()
     {
-        roomList.Add(new RoomInfo("Group_1", "1인 테스트방", 0, 1, "이은빈"));
-        roomList.Add(new RoomInfo("Group_2", "2인방", 0, 2, "김민주"));
-        roomList.Add(new RoomInfo("Group_3", "3인방", 0, 3, "김민준"));
-        roomList.Add(new RoomInfo("Group_4", "4인방", 0, 4, "이동섭"));
+        roomList.Add(new RoomInfo("Group_11", "1인 테스트방", 0, 1, "이은빈"));
+        roomList.Add(new RoomInfo("Group_22", "2인방", 0, 2, "김민주"));
+        roomList.Add(new RoomInfo("Group_33", "3인방", 0, 3, "김민준"));
+        roomList.Add(new RoomInfo("Group_44", "4인방", 0, 4, "이동섭"));
         roomList.Add(new RoomInfo("Group_5", "5인방", 0, 5, "김정현")); 
         roomList.Add(new RoomInfo("Group_6", "6인방", 0, 6, "이은빈"));
 
