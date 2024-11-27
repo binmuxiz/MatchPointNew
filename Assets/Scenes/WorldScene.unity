@@ -3953,7 +3953,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8383344148730722992, guid: 9eb85e4633b7e44f89c50c1b5fbb9760, type: 3}
       propertyPath: m_text
-      value: "\uD504\uB85C\uC81D\uD2B8 \uC124\uBA85\uB780"
+      value: "\uC194\uB85C\uB4E4\uC744 \uC704\uD55C \uBA54\uD0C0\uBC84\uC2A4 \uCEE4\uD50C
+        \uB9E4\uCE6D \uD50C\uB7AB\uD3FC"
       objectReference: {fileID: 0}
     - target: {fileID: 8383344148730722992, guid: 9eb85e4633b7e44f89c50c1b5fbb9760, type: 3}
       propertyPath: m_fontAsset
@@ -18483,7 +18484,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8383344148730722992, guid: 9eb85e4633b7e44f89c50c1b5fbb9760, type: 3}
       propertyPath: m_text
-      value: Couple Matching Platform
+      value: 'Couple Matching
+
+'
       objectReference: {fileID: 0}
     - target: {fileID: 8383344148730722992, guid: 9eb85e4633b7e44f89c50c1b5fbb9760, type: 3}
       propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
