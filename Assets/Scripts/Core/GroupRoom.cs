@@ -69,7 +69,7 @@ public class GroupRoom: Singleton<GroupRoom>
         roomNameText.text = roomInfo.roomName;
         this.maxPlayers = roomInfo.maxPlayerCount;
         
-        LoadingCanvas.Loading(2000, "미팅룸 접속중...");
+        await LoadingCanvas.Loading(2000, "미팅룸 접속중...");
         
         Debug.Log("---------------시작 대기중-------------------");
         this.waitingPanel = Instantiate(panelWaitingPrefab, canvas.transform, false).GetComponent<WaitingPanel>();
@@ -79,18 +79,9 @@ public class GroupRoom: Singleton<GroupRoom>
         
         InitializePlayerProfiles().Forget();
         
-        LoadingCanvas.Loading(2000, "미팅 준비중...");
+        await LoadingCanvas.Loading(2000, "미팅 준비중...");
 
-        await UniTask.WaitUntil(() => initalized);
-        
-        // 보이스챗 켜기
-        
-        // await UniTask.Delay(TimeSpan.FromSeconds(CountDown));
-
-        
-        // await GoToDoubleRoom();
-        // GoToWorld();
-
+        // await UniTask.WaitUntil(() => initalized);
     }
 
     private async UniTask InitializePlayerProfiles()
@@ -162,7 +153,7 @@ public class GroupRoom: Singleton<GroupRoom>
         {
             if (myId == yourSelection)
             {
-                Debug.Log("서로 선택함");
+                Debug.Log("1:1 미팅룸으로 이동");
                 // GameManager.Instance.EnterDoubleRoom(myId, mySelection);
                 meetingPanel.SetActive(false);
                 DestroyAllChildren(playerInfoTransform);
@@ -246,4 +237,8 @@ public class GroupRoom: Singleton<GroupRoom>
         }
     }
 
+    public void Exit()
+    {
+        GameManager.Instance.EnterWorld();
+    }
 }

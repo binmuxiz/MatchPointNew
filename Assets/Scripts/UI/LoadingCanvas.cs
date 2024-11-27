@@ -15,7 +15,7 @@ namespace UI
             Fader.FadeOut(CanvasGroup);
         }
 
-        public async void Loading(int ms, string message)
+        public async UniTask Loading(int ms, string message)
         {
             loadingText.text = message;
             await Fader.FadeIn(CanvasGroup, 1f);
