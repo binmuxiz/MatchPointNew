@@ -30,6 +30,7 @@ public class BalanceGameManager : MonoBehaviour
     public TMP_Text RightNameText1;
     public TMP_Text RightNameText2;
 
+    private Color color;
     public List<TMP_Text> nameText;
     private bool isShowed = false;
     
@@ -38,7 +39,7 @@ public class BalanceGameManager : MonoBehaviour
     void Awake()
     {
         if (Instance == null) Instance = this;
-        
+        color = LeftButton.GetComponentInChildren<Image>().color;
     }
 
     
@@ -66,8 +67,7 @@ public class BalanceGameManager : MonoBehaviour
             GameObject button = Instantiate(TopicPrefab, Content.transform,false);
             button.GetComponentInChildren<TMP_Text>().text = $"Topic : {balanceTopicList.triples[i].topic}\nMaker : {balanceTopicList.triples[i].user_id}";
             Debug.Log("index : " + index);
-            button.GetComponent<Button>().onClick.AddListener(() => TopicButton(index));
-            index++;
+            button.GetComponentInChildren<Button>().onClick.AddListener(() => TopicButton(index));
         }
     }
 
@@ -110,6 +110,7 @@ public class BalanceGameManager : MonoBehaviour
             TextClear();
             SetBalanceGameUnit(i);
             await UniTask.WaitUntil(() => SharedData.isChecked >= 2);
+            Debug.Log(1111111);
             await UniTask.Delay(2000);
             
             ButtonClear();
@@ -141,12 +142,12 @@ public class BalanceGameManager : MonoBehaviour
         if (index == 0)
         {
             Debug.Log("LeftButton");
-            LeftButton.GetComponent<Image>().color = Color.gray;
+            LeftButton.GetComponentInChildren<Image>().color = Color.gray;
         }
         else
         {
             Debug.Log("RightButton");
-            RightButton.GetComponent<Image>().color = Color.gray;
+            RightButton.GetComponentInChildren<Image>().color = Color.gray;
         }
         SharedData.Instance.DoneRpc();
         SharedData.Instance.PublicizeProcessRpc(index,PlayerData.Instance.UserId);
@@ -154,8 +155,8 @@ public class BalanceGameManager : MonoBehaviour
 
     private void ButtonClear()
     {
-        LeftButton.GetComponent<Image>().color = Color.white;
-        RightButton.GetComponent<Image>().color = Color.white;
+        LeftButton.GetComponentInChildren<Image>().color = color;
+        RightButton.GetComponentInChildren<Image>().color = color;
     }
 
     private void TextClear()

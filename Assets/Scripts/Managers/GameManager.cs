@@ -60,7 +60,7 @@ public class GameManager: Singleton<GameManager>
         await loadingCanvas.Show("접속중...");
         GameState = GameState.Group;
         
-        BalanceGameSettingButton.SetActive(false);
+        // BalanceGameSettingButton.SetActive(false);
         
         var args = new StartGameArgs
         {
