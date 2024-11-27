@@ -36,8 +36,8 @@ public class SharedData: NetworkBehaviour
     
     private void Awake()    
     {
-        if (Instance == null) Instance = this;
-        DontDestroyOnLoad(this);
+        //if (Instance == null) Instance = this;
+        //DontDestroyOnLoad(this);
     }
 
     public override void Spawned()

@@ -46111,6 +46111,7 @@ MonoBehaviour:
   groupRoomSpwanPosition: {fileID: 1413183567}
   groupRoomRunnerPrefab: {fileID: 2607193962398319913, guid: abf2516d375ea2246b891c9ab2005099, type: 3}
   doubleRoomRunnerPrefab: {fileID: 2607193962398319913, guid: 28fba703f1056ce46bdd39e94e71c316, type: 3}
+  doubleRoomCanvas: {fileID: 0}
 --- !u!114 &1469468967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50320,6 +50321,22 @@ PrefabInstance:
     - target: {fileID: 8756733072901453254, guid: 3aa336fffa0ce46518e6567654edc3ea, type: 3}
       propertyPath: m_text
       value: Log In
+      objectReference: {fileID: 0}
+    - target: {fileID: 8756733072901453254, guid: 3aa336fffa0ce46518e6567654edc3ea, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8756733072901453254, guid: 3aa336fffa0ce46518e6567654edc3ea, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8756733072901453254, guid: 3aa336fffa0ce46518e6567654edc3ea, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8756733072901453254, guid: 3aa336fffa0ce46518e6567654edc3ea, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 8756733072901453254, guid: 3aa336fffa0ce46518e6567654edc3ea, type: 3}
       propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
@@ -56971,6 +56988,7 @@ MonoBehaviour:
   - {fileID: 1209003597263418792, guid: bb2c8fdea4c30934bafb8ef85e24e322, type: 3}
   - {fileID: 4556629746809676997, guid: 70795a02eb94a2245b27ce77cd8f168a, type: 3}
   - {fileID: 8190985545917595920, guid: 63213c7122e4ce84e89c755b553cc66f, type: 3}
+  NameTag: {fileID: 191624794336198941, guid: 6d9384c82b689af45bcf0eb090152243, type: 3}
 --- !u!1001 &1814966293
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1037377950550971583}
   - component: {fileID: 6308108251400398058}
   - component: {fileID: 5264448564448647243}
+  - component: {fileID: 9749798177265588}
   m_Layer: 10
   m_Name: Player-Double
   m_TagString: Player
@@ -59,6 +60,7 @@ MonoBehaviour:
   - {fileID: -4214056591852685742}
   - {fileID: 6308108251400398058}
   - {fileID: 5264448564448647243}
+  - {fileID: 9749798177265588}
 --- !u!114 &5214673859124573582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71,6 +73,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4641682ec0f403c9c65974f7314597c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  realBalanceGameList:
+    topic: 
+    options: []
   _UserId: 
   _UserName: 
   _Gender: 
@@ -196,3 +201,15 @@ MonoBehaviour:
   direction: {x: 0, y: 0, z: 0}
   SimpleKcc: {fileID: 0}
   animator: {fileID: 0}
+--- !u!114 &9749798177265588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3599549571430005328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6376dd7fc23b3764483a7349b58502e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

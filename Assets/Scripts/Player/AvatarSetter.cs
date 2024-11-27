@@ -40,7 +40,7 @@ namespace Player
                 // 이름표를 생성한 후 에디터 전용 플래그를 해제
 
                 nameTag.transform.SetParent(avatar.transform);
-                await UniTask.Delay(3000);
+                await UniTask.WaitUntil(() => SharedData.Instance);
                 SharedData.Instance.SyncNameTagRpc(nameTag, name);
 
                 // parent.position = new Vector3(parent.position.x, 1, parent.position.z);
