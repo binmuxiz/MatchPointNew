@@ -1,12 +1,14 @@
-﻿using UnityEngine;
+﻿using Fusion;
+using UnityEngine;
 
 namespace Player
 {
     public class AvatarSetter: Singleton<AvatarSetter>
     {
         [SerializeField] private GameObject[] avatarPrefabList;
+        public GameObject NameTag;
         
-        public void SetAvatar(Transform parent, string id)
+        public async void SetAvatar(Transform parent, string id)
         {
             GameObject avatarPrefab = null;
 
@@ -33,6 +35,8 @@ namespace Player
             if (avatarPrefab != null)
             {
                 GameObject avatar = Instantiate(avatarPrefab, parent);
+                NetworkObject nameTag = await RunnerController.Runner.SpawnAsync(NameTag, parent.position + 1*Vector3.up);
+                nameTag.transform.SetParent(avatar.transform);
                 // parent.position = new Vector3(parent.position.x, 1, parent.position.z);
 
 

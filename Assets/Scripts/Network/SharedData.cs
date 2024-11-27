@@ -52,6 +52,8 @@ public class SharedData: NetworkBehaviour
             string name = PlayerData.Instance.Profile.user.name;
             string gender = PlayerData.Instance.Profile.user.gender;
             SetUser(id, name, gender);
+            
+            
         }
         
         AvatarSetter.Instance.SetAvatar(transform, UserId);
