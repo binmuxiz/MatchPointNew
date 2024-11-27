@@ -48,7 +48,7 @@ namespace Player
             if (!HasStateAuthority) return;
 
             // 이동 방향 설정
-            direction = inputDirection;
+            direction = Quaternion.Euler(0f, -90f, 0f) * -inputDirection;
 
             // 중력 적용
             if (SimpleKcc.IsGrounded)

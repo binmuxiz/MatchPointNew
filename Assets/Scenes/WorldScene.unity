@@ -57323,9 +57323,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   avatarPrefabList:
   - {fileID: 1871552975650330193, guid: 662f546f5d7213c4287baf127d931676, type: 3}
-  - {fileID: 1871552975650330193, guid: 586cf1b58e5b2dd4ba3d62fc19827358, type: 3}
   - {fileID: 1871552975650330193, guid: 0b316d8e983a1f045a3758134adbd7de, type: 3}
-  - {fileID: 1871552975650330193, guid: 662f546f5d7213c4287baf127d931676, type: 3}
+  - {fileID: 1871552975650330193, guid: a4ff1c4bd45c31c44a0e96602546521f, type: 3}
+  - {fileID: 1871552975650330193, guid: 586cf1b58e5b2dd4ba3d62fc19827358, type: 3}
   NameTag: {fileID: 191624794336198941, guid: 6d9384c82b689af45bcf0eb090152243, type: 3}
 --- !u!1001 &1814966293
 PrefabInstance:

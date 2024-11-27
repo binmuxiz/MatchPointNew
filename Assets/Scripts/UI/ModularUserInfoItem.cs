@@ -38,10 +38,10 @@ namespace UI
             switch (userId)
             {
                 case "1":
-                    avatarImage.sprite = sprites[3];
+                    avatarImage.sprite = sprites[0];
                     break;
                 case "2":
-                    avatarImage.sprite = sprites[0];
+                    avatarImage.sprite = sprites[1];
                     break;
                 case "3":
                     avatarImage.sprite = sprites[2];

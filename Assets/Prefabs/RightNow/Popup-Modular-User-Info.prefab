@@ -291,10 +291,10 @@ MonoBehaviour:
   temperatureSlider: {fileID: 7567272119383684970}
   avatarImage: {fileID: 481728316083310465}
   sprites:
-  - {fileID: 21300000, guid: 32cececa740d678408243fb95b01d96c, type: 3}
-  - {fileID: 21300000, guid: c774cc4a8d37a584d9a5718597b3e354, type: 3}
-  - {fileID: 21300000, guid: d5a964a1f7b48eb4fa0e2d597fae4a66, type: 3}
-  - {fileID: 21300000, guid: cdec0254eff6fad4588450de5bbfa001, type: 3}
+  - {fileID: 21300000, guid: b8d03003feb340542845a94b110548ab, type: 3}
+  - {fileID: 21300000, guid: 2777185b1d5cf7b41aedeeb83173364c, type: 3}
+  - {fileID: 21300000, guid: 95166a69c48526c4f9e23fbbfad7ff2c, type: 3}
+  - {fileID: 21300000, guid: 9121f6de123dc9243bb90ef8a18ba416, type: 3}
   userId: 
   voteButton: {fileID: 2249274809519093097}
   heartStampPrefab: {fileID: 7795963425044368998, guid: 0a6516ea4d4f9d748bafe66c41a52b12, type: 3}
