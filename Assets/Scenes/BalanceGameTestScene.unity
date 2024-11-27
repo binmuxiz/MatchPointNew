@@ -45907,8 +45907,6 @@ MonoBehaviour:
   groupRoomSpwanPosition: {fileID: 1413183567}
   groupRoomRunnerPrefab: {fileID: 2607193962398319913, guid: abf2516d375ea2246b891c9ab2005099, type: 3}
   doubleRoomRunnerPrefab: {fileID: 2607193962398319913, guid: 28fba703f1056ce46bdd39e94e71c316, type: 3}
-  groupRoomPrefab: {fileID: 4606173706028452695, guid: 694a01710506be740bdac6a67c47c4ac, type: 3}
-  doubleRoomPrefab: {fileID: 4969360893013325109, guid: 3f01f825968546f419ffc352040ac0cb, type: 3}
 --- !u!114 &1469468967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71974,6 +71972,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   otherId: 
+  _otherProfile:
+    name: 
+    gender: 
+    similarity: 
+    summary: 
   opened: 0
 --- !u!224 &7974899126267966871
 RectTransform:
