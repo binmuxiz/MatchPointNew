@@ -40,7 +40,7 @@ public class GameManager: Singleton<GameManager>
         var args = new StartGameArgs
         {
             GameMode = GameMode.Shared,
-            SessionName = "World222",
+            SessionName = "World3",
             PlayerCount = 20,
         };
 
