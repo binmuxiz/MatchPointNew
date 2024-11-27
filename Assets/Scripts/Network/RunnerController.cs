@@ -75,6 +75,7 @@ public class RunnerController : MonoBehaviour, INetworkRunnerCallbacks
     private async UniTaskVoid SpawnPlayer(GameObject prefab, Vector3 spawnPosition, Quaternion rotation, PlayerRef player)
     {
         await UniTask.Yield();
+        Debug.Log("SpawnPlayer", gameObject);
         _playerObject = Runner.Spawn(prefab, spawnPosition, rotation, player);
         SessionManager.SpawnDone = true;
     }

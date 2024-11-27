@@ -1,6 +1,7 @@
 using System;
 using Fusion;
 using Network;
+using UI;
 using UnityEngine;
 
 public enum GameState
@@ -25,6 +26,7 @@ public class GameManager: Singleton<GameManager>
     
     public GameObject doubleRoomRunnerPrefab;
 
+    public LoadingCanvas loadingCanvas;
 
     private void Awake()
     {
@@ -55,9 +57,10 @@ public class GameManager: Singleton<GameManager>
 // 그룹 미팅 룸 조인 
     public async void EnterGroupRoom(RoomInfo roomInfo)
     {
+        await loadingCanvas.Show("접속중...");
         GameState = GameState.Group;
         
-        // BalanceGameSettingButton.SetActive(false);
+        BalanceGameSettingButton.SetActive(false);
         
         var args = new StartGameArgs
         {
@@ -67,6 +70,8 @@ public class GameManager: Singleton<GameManager>
         };
 
         await SessionManager.Instance.StartSessionAsync(args, groupRoomRunnerPrefab);
+
+        await loadingCanvas.Hide();
 
         GroupRoom.Instance.Enter(roomInfo);
     }

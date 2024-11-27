@@ -36,11 +36,11 @@ public class LockedView : NetworkBehaviour
         inputDirection = Camera.main.transform.TransformDirection(inputDirection);
 
         // 애니메이션 
-        // if (animator != null)
-        // {
-        //     bool isMoving = inputDirection != Vector3.zero;
-        //     animator.SetBool("IsWalking", isMoving);
-        // }
+        if (animator != null)
+        {
+            bool isMoving = inputDirection != Vector3.zero;
+            animator.SetBool("IsWalking", isMoving);
+        }
     }
 
     

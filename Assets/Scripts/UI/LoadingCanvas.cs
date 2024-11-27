@@ -22,5 +22,17 @@ namespace UI
             await UniTask.Delay(ms); // 대기화면 
             await Fader.FadeOut(CanvasGroup, 1f);
         }
+
+        public async UniTask Show(string message)
+        {
+            loadingText.text = message;
+            await Fader.FadeIn(CanvasGroup, 1f);
+        }
+
+        public async UniTask Hide()
+        {
+            await Fader.FadeOut(CanvasGroup, 1f);
+
+        }
     }
 }

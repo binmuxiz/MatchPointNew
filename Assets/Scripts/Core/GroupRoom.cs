@@ -79,7 +79,7 @@ public class GroupRoom: Singleton<GroupRoom>
         
         InitializePlayerProfiles().Forget();
         
-        await LoadingCanvas.Loading(2000, "미팅 준비중...");
+        // await LoadingCanvas.Loading(2000, "미팅 준비중...");
 
         // await UniTask.WaitUntil(() => initalized);
     }

@@ -43,6 +43,7 @@ namespace Player
             if (avatarPrefab != null)
             {
                 GameObject avatar = Instantiate(avatarPrefab, parent);
+
                 var tpv = avatar.GetComponentInParent<ThirdPersonView>();
                 tpv.animator = avatar.GetComponentInChildren<Animator>();
                 

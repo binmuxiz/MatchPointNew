@@ -75,3 +75,5 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+Assets/SkyBox/Cubemaps/christmas_snowy_street_8k.hdr
+Assets/SkyBox/Cubemaps/christmas_snowy_street_8k.hdr.meta
