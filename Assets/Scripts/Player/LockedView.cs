@@ -85,6 +85,7 @@ public class LockedView : NetworkBehaviour
     public override void Spawned()
     {
         if (HasStateAuthority) {
+            Debug.Log("Spawned lockedView");
             CameraController.Instance.SetGroupMeetingRoomCamera(); 
         }
     }
