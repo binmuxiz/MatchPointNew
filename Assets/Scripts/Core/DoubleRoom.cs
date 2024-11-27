@@ -7,16 +7,15 @@ public class DoubleRoom: Singleton<DoubleRoom>
 
     private void Start()
     {
-        canvas.enabled = false;
     }
 
     public async void Enter()
     {
-        canvas.enabled = true;
+        canvas.gameObject.SetActive(true);
         
         await Process();
         
-        canvas.enabled = false;
+        
 
     }
     

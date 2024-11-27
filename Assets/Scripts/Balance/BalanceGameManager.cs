@@ -15,7 +15,8 @@ public class BalanceGameManager : MonoBehaviour
     public GameObject TopicPrefab;
     public GameObject BalanceGameButton;
     public GameObject TopicCanvas;
-    
+
+    public GameObject RealBalanceGameCanvas;
     public GameObject BalanceGameUnit;
     public GameObject LeftButton;
     public GameObject RightButton;
@@ -29,17 +30,15 @@ public class BalanceGameManager : MonoBehaviour
     public TMP_Text RightNameText1;
     public TMP_Text RightNameText2;
 
-    public Queue<TMP_Text> LeftNameQueue;
-    public Queue<TMP_Text> RightNameameQueue;
-    
+    public List<TMP_Text> nameText;
+    private bool isShowed = false;
     
     //public int index;
 
     void Awake()
     {
         if (Instance == null) Instance = this;
-        LeftNameQueue = new Queue<TMP_Text>();
-        RightNameameQueue = new Queue<TMP_Text>();
+        
     }
 
     
@@ -60,7 +59,6 @@ public class BalanceGameManager : MonoBehaviour
 
     public void ShowBalanceTopicListButton()
     {
-        
         for(int i = 0;i < balanceTopicList.triples.Count;i++)
         {
             int index = i;
@@ -100,25 +98,38 @@ public class BalanceGameManager : MonoBehaviour
         BalanceGameProcess();
     }
 
-    public async UniTask BalanceGameProcess()
+    private async UniTask BalanceGameProcess()
     {
         Debug.Log("시작");
         BalanceGameUnit.SetActive(true);
+        RealBalanceGameCanvas.SetActive(true);
+        Debug.Log("ㅁㄻㄴㄻㄴㄻㄴㄹ");
         
         for (int i = 0; i < SharedData.Instance.realBalanceGameList.options.Count; i++)
         {
-            InitiateQueue();
+            TextClear();
             SetBalanceGameUnit(i);
             await UniTask.WaitUntil(() => SharedData.isChecked >= 2);
             await UniTask.Delay(2000);
+            
+            ButtonClear();
+            TurnOnResultText();
+            
             Debug.Log("서로 것 공개");
             await UniTask.Delay(2000);
+            
+            TurnOnResultText();
+            
             SharedData.Instance.ClearRpc();
-            if(i == SharedData.Instance.realBalanceGameList.options.Count - 1) BalanceGameUnit.SetActive(false);
+            if (i == SharedData.Instance.realBalanceGameList.options.Count - 1)
+            {
+                BalanceGameUnit.SetActive(false);
+                RealBalanceGameCanvas.SetActive(false);
+            }
         }
     }
 
-    public void SetBalanceGameUnit(int index)
+    private void SetBalanceGameUnit(int index)
     {
         BalanceGameTopicText.text = SharedData.Instance.realBalanceGameList.topic;
         LeftButton.GetComponentInChildren<TMP_Text>().text = SharedData.Instance.realBalanceGameList.options[index].left;
@@ -138,24 +149,44 @@ public class BalanceGameManager : MonoBehaviour
             RightButton.GetComponent<Image>().color = Color.gray;
         }
         SharedData.Instance.DoneRpc();
+        SharedData.Instance.PublicizeProcessRpc(index,PlayerData.Instance.UserId);
     }
 
-    public void InitiateQueue()
+    private void ButtonClear()
+    {
+        LeftButton.GetComponent<Image>().color = Color.white;
+        RightButton.GetComponent<Image>().color = Color.white;
+    }
+
+    private void TextClear()
     {
         LeftNameText1.text = "";
         LeftNameText2.text = "";
         
         RightNameText1.text = "";
         RightNameText2.text = "";
-        
-        LeftNameQueue.Clear();
-        RightNameameQueue.Clear();
-        
-        LeftNameQueue.Enqueue(LeftNameText1);
-        LeftNameQueue.Enqueue(LeftNameText2);
-        
-        RightNameameQueue.Enqueue(RightNameText1);
-        RightNameameQueue.Enqueue(RightNameText2);
+    }
+
+    private void TurnOnResultText()
+    {
+        if (!isShowed)
+        {
+            Debug.Log("텍스트 켜짐");
+            isShowed = true;
+            foreach (var i in nameText)
+            {
+                i.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            Debug.Log("텍스트 꺼짐");
+            isShowed = false;
+            foreach (var i in nameText)
+            {
+                i.gameObject.SetActive(false);
+            }
+        }
     }
 
     

@@ -80,7 +80,6 @@ public class RunnerController : MonoBehaviour, INetworkRunnerCallbacks
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
         Debug.Log("PlayerLeft");
-        // 플레이어가 세션을 떠날 때 오브젝트 제거
         var playerObject = Runner.GetPlayerObject(player);
         if (playerObject != null)
         {
