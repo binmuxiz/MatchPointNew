@@ -70767,7 +70767,7 @@ MonoBehaviour:
     summary: 
   votedUserId: 
   roomNameText: {fileID: 200016686}
-  loadingCanvasGroup: {fileID: 3969858020375688126}
+  LoadingCanvas: {fileID: 0}
   panelWaitingPrefab: {fileID: 8479360608994651925, guid: 4860b8ccdcc32a1428b9fd81540c032c, type: 3}
   waitingPanel: {fileID: 0}
   playerInfoTransform: {fileID: 2459301}
