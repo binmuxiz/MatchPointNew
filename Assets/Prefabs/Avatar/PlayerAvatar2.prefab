@@ -50,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4095594143097238144, guid: 194469e158c63874dbd79481341a1ddc, type: 3}
       propertyPath: m_Name
-      value: PlayerAvatar1
+      value: PlayerAvatar2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -160,10 +160,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Animator: {fileID: 2944424783900268545}
-  TotalWords: 0
+  TotalWords: 1
   ApplyTiming: 2
   SyncSettings: 79
-  StateHashes: 00000000
+  StateHashes: 000000002b1a167c794069558b7cfd670f5f2b88
   TriggerHashes: 00000000
 --- !u!4 &9096319521815691899 stripped
 Transform:
