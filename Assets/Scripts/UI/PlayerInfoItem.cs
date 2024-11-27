@@ -1,4 +1,5 @@
-﻿using Data;
+﻿using System;
+using Data;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,6 +14,7 @@ namespace UI
         public TMP_Text nameText;
         public Image avatarImage;
         public Sprite[] sprites;
+        public Toggle toggle;
 
         [Header("Data")]
         public string userId;
@@ -21,6 +23,15 @@ namespace UI
         private void Awake()
         {
             button.onClick.AddListener(OnClicked);
+        }
+
+
+        private void Update()
+        {
+            if (GroupRoom.Instance.votedUserId == userId)
+            {
+                toggle.isOn = true;
+            }
         }
 
 

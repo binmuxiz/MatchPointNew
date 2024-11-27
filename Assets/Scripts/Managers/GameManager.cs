@@ -57,7 +57,7 @@ public class GameManager: Singleton<GameManager>
     {
         GameState = GameState.Group;
         
-        BalanceGameSettingButton.SetActive(false);
+        // BalanceGameSettingButton.SetActive(false);
         
         var args = new StartGameArgs
         {
