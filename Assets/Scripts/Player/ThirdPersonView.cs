@@ -23,6 +23,7 @@ namespace Player
 
         private void Awake()
         {
+            Camera.main.gameObject.SetActive(true);
             SimpleKcc = GetComponent<SimpleKCC>();
         }
 

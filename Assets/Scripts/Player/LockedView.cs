@@ -33,6 +33,7 @@ public class LockedView : NetworkBehaviour
         if (!HasStateAuthority) return;
         
         inputDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
+        Debug.Log(Camera.main);
         inputDirection = Camera.main.transform.TransformDirection(inputDirection);
 
         // 애니메이션 

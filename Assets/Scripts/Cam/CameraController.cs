@@ -47,12 +47,12 @@ public class CameraController: Singleton<CameraController>
 
     public void SetGroupMeetingRoomCamera()  
     {
-        moveCamera.SetActive(false);
+        //moveCamera.SetActive(false);
         lockCamera.SetActive(true);
         facingRoomCamera.SetActive(false);
 
-        // 그룹룸 카메라 고정
-        // brain.enabled = false;
+        
+        brain.enabled = false;
     }
 
     public void SetFacingRoomCamera()
