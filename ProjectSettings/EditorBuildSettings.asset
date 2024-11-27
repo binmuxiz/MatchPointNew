@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/BalanceGameTestScene.unity
     guid: d8281a3ed167cd147978cd200dfaf460
+  - enabled: 1
+    path: Assets/Photon/PhotonVoice/Demos/Fusion/DemoNetworkObject/Scene.unity
+    guid: 64b14236c88a0fb44adaeda9ded16a2a
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

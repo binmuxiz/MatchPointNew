@@ -49,7 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SortKey: 269530536
   ObjectInterest: 0
-  Flags: 2305
+  Flags: 264449
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 2132928725}
@@ -209,7 +209,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playDelayConfig:
     Low: 200
-    High: 400
+    High: 200
     Max: 1000
     SpeedUpPerc: 5
   restartOnDeviceChange: 1
