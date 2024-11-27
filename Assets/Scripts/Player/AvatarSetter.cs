@@ -1,4 +1,5 @@
-﻿using Fusion;
+﻿using Cysharp.Threading.Tasks;
+using Fusion;
 using UnityEngine;
 
 namespace Player
@@ -8,7 +9,7 @@ namespace Player
         [SerializeField] private GameObject[] avatarPrefabList;
         public GameObject NameTag;
         
-        public async void SetAvatar(Transform parent, string id)
+        public async void SetAvatar(Transform parent, string id, string name)
         {
             GameObject avatarPrefab = null;
 
@@ -35,8 +36,13 @@ namespace Player
             if (avatarPrefab != null)
             {
                 GameObject avatar = Instantiate(avatarPrefab, parent);
-                NetworkObject nameTag = await RunnerController.Runner.SpawnAsync(NameTag, parent.position + 1*Vector3.up);
+                NetworkObject nameTag = await RunnerController.Runner.SpawnAsync(NameTag, parent.position + 2*Vector3.up);
+                // 이름표를 생성한 후 에디터 전용 플래그를 해제
+
                 nameTag.transform.SetParent(avatar.transform);
+                await UniTask.Delay(3000);
+                SharedData.Instance.SyncNameTagRpc(nameTag, name);
+
                 // parent.position = new Vector3(parent.position.x, 1, parent.position.z);
 
 

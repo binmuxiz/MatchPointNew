@@ -3,6 +3,7 @@ using Fusion;
 using Player;
 using UnityEngine;
 using Newtonsoft.Json;
+using TMPro;
 using WebSocketSharp;
 
 public class SharedData: NetworkBehaviour
@@ -56,7 +57,7 @@ public class SharedData: NetworkBehaviour
             
         }
         
-        AvatarSetter.Instance.SetAvatar(transform, UserId);
+        AvatarSetter.Instance.SetAvatar(transform, UserId, UserName);
     }
 
     public override void Despawned(NetworkRunner runner, bool hasState)
@@ -151,6 +152,12 @@ public class SharedData: NetworkBehaviour
             }
         }
     }
-    
-    
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.StateAuthority)]
+    public void SyncNameTagRpc(NetworkObject nameTag,string name)
+    {
+        Debug.Log("실행됨");
+        Debug.Log(nameTag.GetComponentInChildren<TMP_Text>());
+        nameTag.GetComponentInChildren<TMP_Text>().text = name;
+    }
 }
