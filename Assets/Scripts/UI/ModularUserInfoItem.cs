@@ -63,7 +63,7 @@ namespace UI
 
             GroupRoom.Instance.votedUserId = votedId;
             
-            // if (myId == votedId) return;
+            if (myId == votedId) return;
             
             voteButton.interactable = false;
             Instantiate(heartStampPrefab, this.transform, false);

@@ -33,7 +33,8 @@ public class GroupRoom: Singleton<GroupRoom>
     [SerializeField] private TMP_Text roomNameText;
 
     [Header("Loading")] 
-    public CanvasGroup loadingCanvasGroup;
+    public LoadingCanvas LoadingCanvas;
+    
     
     [Header("Waiting")] 
     public GameObject panelWaitingPrefab;
@@ -45,7 +46,6 @@ public class GroupRoom: Singleton<GroupRoom>
 
 
 
-    
     private void Awake()
     {
         if (panelWaitingPrefab == null)
@@ -69,9 +69,7 @@ public class GroupRoom: Singleton<GroupRoom>
         roomNameText.text = roomInfo.roomName;
         this.maxPlayers = roomInfo.maxPlayerCount;
         
-        // await Fader.FadeIn(loadingCanvasGroup, 1f);
-        // await UniTask.Delay(1000); // 대기화면 
-        await Fader.FadeOut(loadingCanvasGroup, 1f);
+        LoadingCanvas.Loading(2000, "미팅룸 접속중...");
         
         Debug.Log("---------------시작 대기중-------------------");
         this.waitingPanel = Instantiate(panelWaitingPrefab, canvas.transform, false).GetComponent<WaitingPanel>();
@@ -80,9 +78,8 @@ public class GroupRoom: Singleton<GroupRoom>
         Debug.Log("---------------시작------------------------");
         
         InitializePlayerProfiles().Forget();
-        await Fader.FadeIn(loadingCanvasGroup, 1f);
-        await UniTask.Delay(1000); // 대기화면 
-        await Fader.FadeOut(loadingCanvasGroup, 1f);
+        
+        LoadingCanvas.Loading(2000, "미팅 준비중...");
 
         await UniTask.WaitUntil(() => initalized);
         
@@ -137,8 +134,48 @@ public class GroupRoom: Singleton<GroupRoom>
         Dictionary<string, string> dict = SharedData.LoveDict;
 
         string myId = PlayerData.Instance.UserId;
-        string mySelection = dict[myId];
 
+        string mySelection = null;
+        string yourSelection = null;
+        
+        if (dict.ContainsKey(myId))
+        {
+            mySelection = dict[myId];
+        }
+
+        if (mySelection != null && dict.ContainsKey(mySelection))
+        {
+            yourSelection = dict[mySelection];
+        } 
+        
+
+        if (mySelection == null)
+        {
+            Debug.Log("선택한 사람 없음 ");
+        }
+        else if (yourSelection == null)
+        {
+            Debug.Log("상대방이 선택한 사람 없음 ");
+        }
+        else
+        {
+            if (myId == yourSelection)
+            {
+                Debug.Log("서로 선택함");
+                GameManager.Instance.EnterDoubleRoom(myId, mySelection);
+                meetingPanel.SetActive(false);
+                DestroyAllChildren(playerInfoTransform);
+                return;
+            }
+            else
+            {
+                Debug.Log("서로 선택안됨");
+            }
+        }
+        Debug.Log("월드로 돌아감 ");
+        GameManager.Instance.EnterWorld();
+        meetingPanel.SetActive(false);
+        DestroyAllChildren(playerInfoTransform);
     }
     
     
@@ -204,4 +241,17 @@ public class GroupRoom: Singleton<GroupRoom>
         // 10초 동안 인원이 유지되면 성공
         return true;
     }
+    
+    
+    
+    
+    void DestroyAllChildren(Transform parent)
+    {
+        // 부모 오브젝트의 Transform을 기준으로 모든 자식 검색
+        foreach (Transform child in parent.transform)
+        {
+            Destroy(child.gameObject); // 자식 오브젝트 삭제
+        }
+    }
+
 }
