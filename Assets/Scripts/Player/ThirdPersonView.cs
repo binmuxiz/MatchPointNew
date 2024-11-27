@@ -77,8 +77,15 @@ namespace Player
         public override void Spawned()
         {
             if (HasStateAuthority)
-            { 
-                CameraController.Instance.SetWorldCamera(transform); 
+            {
+                if (GameManager.Instance.GameState == GameState.World)
+                {
+                    CameraController.Instance.SetWorldCamera(transform); 
+                }
+                else if (GameManager.Instance.GameState == GameState.Group)
+                {
+                    CameraController.Instance.SetGroupMeetingRoomCamera(); 
+                }
             }
         }
     }

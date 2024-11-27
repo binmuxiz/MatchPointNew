@@ -49,10 +49,9 @@ public class CameraController: Singleton<CameraController>
     {
         moveCamera.SetActive(false);
         lockCamera.SetActive(true);
-        facingRoomCamera.SetActive(false);
 
         // 그룹룸 카메라 고정
-        // brain.enabled = false;
+        brain.enabled = false;
     }
 
     public void SetFacingRoomCamera()
