@@ -57,7 +57,7 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 2289782560745729893, guid: 194469e158c63874dbd79481341a1ddc, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 9096319521815691899}
+      addedObject: {fileID: 7987922657894206388}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 194469e158c63874dbd79481341a1ddc, type: 3}
 --- !u!4 &4533330099573853108 stripped
@@ -65,7 +65,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2289782560745729893, guid: 194469e158c63874dbd79481341a1ddc, type: 3}
   m_PrefabInstance: {fileID: 2391251627346339025}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &8770240292746683792
+--- !u!1001 &7588693089878371423
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -91,15 +91,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6bdfcf043f11c674685c80e86d807391, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6bdfcf043f11c674685c80e86d807391, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6bdfcf043f11c674685c80e86d807391, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6bdfcf043f11c674685c80e86d807391, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -117,14 +117,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Model
       objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 6bdfcf043f11c674685c80e86d807391, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 6bdfcf043f11c674685c80e86d807391, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 22100000, guid: c1843ae8cf5e6a84c8a17c62fe70d2fe, type: 2}
+      objectReference: {fileID: 22100000, guid: 0d20bd78bd90d4a46a685a555e27c065, type: 2}
     - target: {fileID: 5866666021909216657, guid: 6bdfcf043f11c674685c80e86d807391, type: 3}
       propertyPath: m_ApplyRootMotion
       value: 0
@@ -135,38 +131,38 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6bdfcf043f11c674685c80e86d807391, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8296762744755343583}
+      addedObject: {fileID: 2070953320066871942}
   m_SourcePrefab: {fileID: 100100000, guid: 6bdfcf043f11c674685c80e86d807391, type: 3}
---- !u!95 &2944424783900268545 stripped
+--- !u!95 &4051798760557760974 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 6bdfcf043f11c674685c80e86d807391, type: 3}
-  m_PrefabInstance: {fileID: 8770240292746683792}
+  m_PrefabInstance: {fileID: 7588693089878371423}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &8464320635902286017 stripped
+--- !u!1 &7318663826879303950 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6bdfcf043f11c674685c80e86d807391, type: 3}
-  m_PrefabInstance: {fileID: 8770240292746683792}
+  m_PrefabInstance: {fileID: 7588693089878371423}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8296762744755343583
+--- !u!114 &2070953320066871942
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8464320635902286017}
+  m_GameObject: {fileID: 7318663826879303950}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 506319458, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Animator: {fileID: 2944424783900268545}
+  Animator: {fileID: 4051798760557760974}
   TotalWords: 1
   ApplyTiming: 2
   SyncSettings: 79
   StateHashes: 000000002b1a167c794069558b7cfd670f5f2b88
   TriggerHashes: 00000000
---- !u!4 &9096319521815691899 stripped
+--- !u!4 &7987922657894206388 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6bdfcf043f11c674685c80e86d807391, type: 3}
-  m_PrefabInstance: {fileID: 8770240292746683792}
+  m_PrefabInstance: {fileID: 7588693089878371423}
   m_PrefabAsset: {fileID: 0}
