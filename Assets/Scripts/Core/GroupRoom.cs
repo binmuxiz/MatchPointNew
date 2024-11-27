@@ -123,12 +123,6 @@ public class GroupRoom: Singleton<GroupRoom>
         initalized = true;
     }
 
-    // 투표하기 버튼
-    public void OnClickedVoteButton()
-    {
-        
-    }
-    
     
     
     // 종료 버튼 눌렀을때

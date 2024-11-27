@@ -290,6 +290,11 @@ MonoBehaviour:
   summary: {fileID: 7826921798207882732}
   temperatureSlider: {fileID: 7567272119383684970}
   avatarImage: {fileID: 481728316083310465}
+  sprites:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   userId: 
   voteButton: {fileID: 2249274809519093097}
   heartStampPrefab: {fileID: 7795963425044368998, guid: 0a6516ea4d4f9d748bafe66c41a52b12, type: 3}
