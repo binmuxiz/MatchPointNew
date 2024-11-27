@@ -25,16 +25,14 @@ public class GameManager: Singleton<GameManager>
     
     public GameObject doubleRoomRunnerPrefab;
 
-    public GameObject doubleRoomCanvas;
-
 
     private void Awake()
     {
-        
         NetworkController = new NetworkController(new HttpClient(BaseURI));
     }
 
-// 월드 접속 
+
+    // 월드 접속 
     public async void EnterWorld()
     {
         GameState = GameState.World;

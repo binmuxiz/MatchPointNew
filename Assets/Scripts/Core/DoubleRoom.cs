@@ -1,3 +1,4 @@
+using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -11,19 +12,10 @@ public class DoubleRoom: Singleton<DoubleRoom>
 
     public async void Enter()
     {
-        canvas.gameObject.SetActive(true);
-        
-        await Process();
-        
-        
-
     }
     
     private async UniTask Process()
     {
-        Debug.Log("Double Room Process 시작");
-
-
     }
     
     

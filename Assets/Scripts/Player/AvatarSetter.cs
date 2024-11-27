@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System;
+using Cysharp.Threading.Tasks;
 using Fusion;
 using UnityEngine;
 
@@ -6,9 +7,15 @@ namespace Player
 {
     public class AvatarSetter: Singleton<AvatarSetter>
     {
+        
         [SerializeField] private GameObject[] avatarPrefabList;
         public GameObject NameTag;
-        
+
+        private void Awake()
+        {
+            DontDestroyOnLoad(this);
+        }
+
         public async void SetAvatar(Transform parent, string id, string name)
         {
             GameObject avatarPrefab = null;
@@ -36,6 +43,9 @@ namespace Player
             if (avatarPrefab != null)
             {
                 GameObject avatar = Instantiate(avatarPrefab, parent);
+                var tpv = avatar.GetComponentInParent<ThirdPersonView>();
+                tpv.animator = avatar.GetComponentInChildren<Animator>();
+                
                 NetworkObject nameTag = await RunnerController.Runner.SpawnAsync(NameTag, parent.position + 2*Vector3.up);
                 // 이름표를 생성한 후 에디터 전용 플래그를 해제
 

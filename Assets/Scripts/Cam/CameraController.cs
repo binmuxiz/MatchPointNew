@@ -10,10 +10,12 @@ public class CameraController: Singleton<CameraController>
 
     public GameObject moveCamera;
     public GameObject lockCamera;
-    
+    public GameObject facingRoomCamera;
 
     private void Awake()
     {
+        DontDestroyOnLoad(this);
+        
         if (brain != null)
         {
             brain.enabled = false;
@@ -21,6 +23,7 @@ public class CameraController: Singleton<CameraController>
 
         moveCamera.SetActive(true);
         lockCamera.SetActive(false);
+        facingRoomCamera.SetActive(false);
     }
 
 
@@ -28,7 +31,8 @@ public class CameraController: Singleton<CameraController>
     {
         moveCamera.SetActive(true);
         lockCamera.SetActive(false);
-        
+        facingRoomCamera.SetActive(false);
+
         Debug.Log("Set World Camera");
         brain.enabled = true;
 
@@ -45,7 +49,16 @@ public class CameraController: Singleton<CameraController>
     {
         moveCamera.SetActive(false);
         lockCamera.SetActive(true);
+        facingRoomCamera.SetActive(false);
+
         // 그룹룸 카메라 고정
         // brain.enabled = false;
+    }
+
+    public void SetFacingRoomCamera()
+    {
+        moveCamera.SetActive(false);
+        lockCamera.SetActive(false);
+        facingRoomCamera.SetActive(true);
     }
 }

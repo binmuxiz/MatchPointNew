@@ -29,7 +29,14 @@ public class Login: MonoBehaviour
 
         if (PlayerData.Instance.UserId != null)
         {
-            GameManager.Instance.EnterWorld();
+            if (GameManager.Instance.GameState == GameState.Double)
+            {
+                GameManager.Instance.EnterDoubleRoom("1", "2");
+            }
+            else
+            {
+                GameManager.Instance.EnterWorld();
+            }
             Destroy(parentCanvas.gameObject);
         }
     }

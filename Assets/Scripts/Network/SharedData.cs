@@ -57,7 +57,7 @@ public class SharedData: NetworkBehaviour
             
         }
         
-        AvatarSetter.Instance.SetAvatar(transform, UserId, UserName);
+        // AvatarSetter.Instance.SetAvatar(transform, UserId, UserName);
     }
 
     public override void Despawned(NetworkRunner runner, bool hasState)

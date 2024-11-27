@@ -163,7 +163,7 @@ public class GroupRoom: Singleton<GroupRoom>
             if (myId == yourSelection)
             {
                 Debug.Log("서로 선택함");
-                GameManager.Instance.EnterDoubleRoom(myId, mySelection);
+                // GameManager.Instance.EnterDoubleRoom(myId, mySelection);
                 meetingPanel.SetActive(false);
                 DestroyAllChildren(playerInfoTransform);
                 return;
@@ -179,15 +179,6 @@ public class GroupRoom: Singleton<GroupRoom>
         DestroyAllChildren(playerInfoTransform);
     }
     
-    
-    
-    private async UniTask GoToDoubleRoom()
-    {
-        await UniTask.Delay(4000);
-        canvas.enabled = false;
-
-        GameManager.Instance.EnterDoubleRoom("1", "2");
-    }
 
     private void GoToWorld()
     {
