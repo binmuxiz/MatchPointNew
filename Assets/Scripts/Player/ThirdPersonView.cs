@@ -25,7 +25,6 @@ namespace Player
         {
             SimpleKcc = GetComponent<SimpleKCC>();
         }
-        
 
         void Update()
         {
@@ -36,15 +35,12 @@ namespace Player
             // inputMouseX = Input.GetAxis("Mouse X");
 
             // 애니메이션 
-            // if (animator != null)
-            // {
-            //     bool isMoving = inputDirection != Vector3.zero;
-            //     animator.SetBool("IsWalking", isMoving);
-            // }
+            if (animator != null)
+            {
+                bool isMoving = inputDirection != Vector3.zero;
+                animator.SetBool("IsWalking", isMoving);
+            }
         }
-        
-        
-        
         
         public override void FixedUpdateNetwork()
         {
@@ -68,13 +64,13 @@ namespace Player
             SimpleKcc.Move(move);  // 이동
 
             // // 회전 (움직임이 있을 때만 회전)
-            // if (direction != Vector3.zero)
-            // {
-            //     SimpleKcc.LookRotation.SetLookRotation(direction);
-            // }
-            //
-            // // 회전
-            // SimpleKcc.AddLookRotation(0f, inputMouseX * rotationSpeed);
+            if (direction != Vector3.zero)
+            {
+                SimpleKcc.SetLookRotation(new Vector2(0f, 90f + Mathf.Atan2(-direction.z, direction.x) * Mathf.Rad2Deg));
+            }
+            
+            // 회전
+            //SimpleKcc.AddLookRotation(0f, inputMouseX * rotationSpeed);
         }
 
         public override void Spawned()

@@ -36,6 +36,9 @@ namespace Player
             if (avatarPrefab != null)
             {
                 GameObject avatar = Instantiate(avatarPrefab, parent);
+                var tpv = avatar.GetComponentInParent<ThirdPersonView>();
+                tpv.animator = avatar.GetComponentInChildren<Animator>();
+                
                 NetworkObject nameTag = await RunnerController.Runner.SpawnAsync(NameTag, parent.position + 2*Vector3.up);
                 // 이름표를 생성한 후 에디터 전용 플래그를 해제
 
