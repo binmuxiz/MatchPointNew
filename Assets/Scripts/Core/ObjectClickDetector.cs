@@ -12,11 +12,7 @@ public class ObjectClickDetector: MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (EventSystem.current.IsPointerOverGameObject())
-            {
-                Debug.Log("UI Clicked");
-            }
-            else
+            if (!EventSystem.current.IsPointerOverGameObject())
             {
                 DetectClick();
             }

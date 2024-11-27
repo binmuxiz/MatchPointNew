@@ -91,6 +91,7 @@ public class SharedData: NetworkBehaviour
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     public void RpcSetBalanceGameTrigger(bool flag)
     {
+        Debug.Log("SetBalanceGameTrigger");
         BalanceGameTrigger = flag;
     }
     
