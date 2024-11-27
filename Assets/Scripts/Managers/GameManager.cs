@@ -25,6 +25,8 @@ public class GameManager: Singleton<GameManager>
     
     public GameObject doubleRoomRunnerPrefab;
 
+    public GameObject doubleRoomCanvas;
+
 
     private void Awake()
     {

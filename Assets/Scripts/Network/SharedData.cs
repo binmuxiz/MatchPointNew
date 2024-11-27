@@ -3,6 +3,7 @@ using Fusion;
 using Player;
 using UnityEngine;
 using Newtonsoft.Json;
+using WebSocketSharp;
 
 public class SharedData: NetworkBehaviour
 {
@@ -127,11 +128,25 @@ public class SharedData: NetworkBehaviour
     {
         if (buttonNum == 0)
         {
-            BalanceGameManager.Instance.LeftNameQueue.Dequeue().text = name;
+            if (string.IsNullOrEmpty(BalanceGameManager.Instance.LeftNameText1.text))
+            {
+                BalanceGameManager.Instance.LeftNameText1.text = name;
+            }
+            else
+            {
+                BalanceGameManager.Instance.LeftNameText2.text = name;
+            }
         }
         else
         {
-            BalanceGameManager.Instance.RightNameameQueue.Dequeue().text = name;
+            if (string.IsNullOrEmpty(BalanceGameManager.Instance.RightNameText1.text))
+            {
+                BalanceGameManager.Instance.RightNameText1.text = name;
+            }
+            else
+            {
+                BalanceGameManager.Instance.RightNameText2.text = name;
+            }
         }
     }
     
