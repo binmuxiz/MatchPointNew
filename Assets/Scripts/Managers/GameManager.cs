@@ -10,6 +10,7 @@ public enum GameState
 
 public class GameManager: Singleton<GameManager>
 {
+    public GameObject BalanceGameSettingButton;
     public GameState GameState = GameState.Login;
     
     public static NetworkController NetworkController;
@@ -57,6 +58,8 @@ public class GameManager: Singleton<GameManager>
     public async void EnterGroupRoom(string roomId, int maxPlayerCount)
     {
         GameState = GameState.Group;
+        
+        BalanceGameSettingButton.SetActive(false);
         
         var args = new StartGameArgs
         {

@@ -2,10 +2,15 @@ using System.Collections.Generic;
 using Fusion;
 using Player;
 using UnityEngine;
+using Newtonsoft.Json;
 
 public class SharedData: NetworkBehaviour
 {
     public static SharedData Instance;
+    
+    [SerializeField]
+    public RealBalanceGameList realBalanceGameList;
+    public static int isChecked;
 
     [Networked] 
     public string UserId { get; private set; }
@@ -94,6 +99,39 @@ public class SharedData: NetworkBehaviour
     {
         Debug.Log($"RpcVote: {otherId}");
         LoveDict[UserId] = otherId; 
+    }
+    
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void GetRealBalanceGameListRpc(string topic_id)
+    {
+        BalanceGameManager.Instance.SyncBalanceGameList(topic_id);
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void DoneRpc()
+    {
+        isChecked++;
+        Debug.Log("체크 수 : " + isChecked);
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void ClearRpc()
+    {
+        isChecked = 0;
+        Debug.Log("체크 수 초기화 : " + isChecked);
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void PublicizeProcessRpc(int buttonNum,string name)
+    {
+        if (buttonNum == 0)
+        {
+            BalanceGameManager.Instance.LeftNameQueue.Dequeue().text = name;
+        }
+        else
+        {
+            BalanceGameManager.Instance.RightNameameQueue.Dequeue().text = name;
+        }
     }
     
     
