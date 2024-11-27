@@ -1,5 +1,4 @@
-﻿using System;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using Data;
 using TMPro;
 using UnityEngine;
@@ -18,15 +17,18 @@ namespace UI
 
         public string userId;
 
+        public Button voteButton;
+
+        public GameObject heartStampPrefab;
+
         private async void Start()
         {
             await UniTask.WaitUntil(() => GroupRoom.Instance.clickedUserId != null);
             this.userId = GroupRoom.Instance.clickedUserId;
             SimpleProfile profile = GroupRoom.Instance.clickedUserInfo;
             
-            // GroupRoom.Instance.clickedUserInfo = null;
-            // GroupRoom.Instance.clickedUserId = null;
-            //
+            GroupRoom.Instance.clickedUserInfo = null;
+            GroupRoom.Instance.clickedUserId = null;
             
             userName.text = profile.name;
             summary.text = profile.summary;
@@ -51,6 +53,22 @@ namespace UI
                     avatarImage.sprite = sprites[0];
                     break;
             }
+        }
+
+        public void Vote()
+        {
+            Debug.Log("Vote()");
+            string myId = PlayerData.Instance.UserId;
+            string votedId = this.userId;
+
+            GroupRoom.Instance.votedUserId = votedId;
+            
+            // if (myId == votedId) return;
+            
+            voteButton.interactable = false;
+            Instantiate(heartStampPrefab, this.transform, false);
+            
+            SharedData.Instance.RpcVote(votedId);
         }
     }
 }

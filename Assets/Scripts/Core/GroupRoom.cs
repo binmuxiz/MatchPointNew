@@ -22,6 +22,13 @@ public class GroupRoom: Singleton<GroupRoom>
     public List<SimpleProfile> PlayerProfiles;
     public GameObject meetingPanel;
     
+    public string clickedUserId;
+    public SimpleProfile clickedUserInfo;
+
+
+    public string votedUserId = null;
+
+    
     [Header("Top")]
     [SerializeField] private TMP_Text roomNameText;
 
@@ -37,8 +44,7 @@ public class GroupRoom: Singleton<GroupRoom>
     public GameObject playerInfoPrefab;
 
 
-    public string clickedUserId;
-    public SimpleProfile clickedUserInfo;
+
     
     private void Awake()
     {
@@ -73,18 +79,18 @@ public class GroupRoom: Singleton<GroupRoom>
         Destroy(waitingPanel.gameObject);
         Debug.Log("---------------시작------------------------");
         
-        // InitializePlayerProfiles().Forget();
-        // await Fader.FadeIn(loadingCanvasGroup, 1f);
-        // await UniTask.Delay(1000); // 대기화면 
-        // await Fader.FadeOut(loadingCanvasGroup, 1f);
+        InitializePlayerProfiles().Forget();
+        await Fader.FadeIn(loadingCanvasGroup, 1f);
+        await UniTask.Delay(1000); // 대기화면 
+        await Fader.FadeOut(loadingCanvasGroup, 1f);
 
-        // await UniTask.WaitUntil(() => initalized);
+        await UniTask.WaitUntil(() => initalized);
         
         // 보이스챗 켜기
         // await UniTask.Delay(TimeSpan.FromSeconds(CountDown));
 
         
-        await GoToDoubleRoom();
+        // await GoToDoubleRoom();
         // GoToWorld();
 
     }
@@ -117,12 +123,6 @@ public class GroupRoom: Singleton<GroupRoom>
         initalized = true;
     }
 
-    // 투표하기 버튼
-    public void OnClickedVoteButton()
-    {
-        
-    }
-    
     
     
     // 종료 버튼 눌렀을때
