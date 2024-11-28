@@ -1,5 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using Data;
+using Network;
 using Newtonsoft.Json;
 using TMPro;
 using UnityEngine;
@@ -34,14 +35,24 @@ namespace Core
             request.password = pw;
 
             string data = JsonConvert.SerializeObject(request);
-            await GameManager.NetworkController.SignUp(data);
-            
-            Debug.Log("sign up");
-            
-            await PlayerData.Instance.GetPlayerData(id);
+            Response response = await GameManager.NetworkController.SignUp(data);
 
+            if (response.Code == 200)
+            {
+                Debug.Log("회원등록됨.");
+            }
+            else
+            {
+                Debug.Log("이미 존재하는 회원?");
+                return;
+            }
+
+            PlayerData.Instance.UserId = id;
+            
             ProfileInput.Instance.Show();
             await UniTask.WaitUntil(() => ProfileInput.Instance.isDone);
+            
+            await PlayerData.Instance.GetPlayerData(id);
 
             if (PlayerData.Instance.UserId != null)
             {
