@@ -15,7 +15,6 @@ public class CameraController: Singleton<CameraController>
         {
             Debug.LogError("Main Camera is null!!!!!!!!!!!!");
         }
-        
         else
         {
             brain = mainCamera.GetComponent<CinemachineBrain>();
@@ -24,6 +23,9 @@ public class CameraController: Singleton<CameraController>
                 brain.enabled = false;
             }
         }
+
+        mainCamera.transform.position = new Vector3(-51, 19, -9.5f);
+        mainCamera.transform.rotation = Quaternion.Euler(15, 90, 0); 
     }
 
     

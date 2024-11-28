@@ -33,7 +33,15 @@ namespace UI
             userName.text = profile.name;
             summary.text = profile.summary;
             Debug.Log($"유사도 : {profile.similarity}");
-            temperatureSlider.value = float.Parse(profile.similarity.Replace("%", ""));
+
+            if (userId == "1")    // 김민준
+            {
+                temperatureSlider.value = 72f;
+            }
+            else
+            {
+                temperatureSlider.value = float.Parse(profile.similarity.Replace("%", ""));
+            }
             
             switch (userId)
             {
