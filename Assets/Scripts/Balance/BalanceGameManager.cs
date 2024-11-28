@@ -4,7 +4,9 @@ using Cysharp.Threading.Tasks;
 using Fusion;
 using Newtonsoft.Json;
 using TMPro;
+using UI;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class BalanceGameManager : MonoBehaviour
@@ -14,9 +16,10 @@ public class BalanceGameManager : MonoBehaviour
     public GameObject Content;
     public GameObject TopicPrefab;
     public GameObject BalanceGameButton;
-    public GameObject TopicCanvas;
-
+    public GameObject BalanceGameListCanvas;
     public GameObject RealBalanceGameCanvas;
+    
+    
     public GameObject BalanceGameUnit;
     public GameObject LeftButton;
     public GameObject RightButton;
@@ -40,6 +43,8 @@ public class BalanceGameManager : MonoBehaviour
     {
         if (Instance == null) Instance = this;
         color = LeftButton.GetComponentInChildren<Image>().color;
+        
+        BalanceGameListCanvas.SetActive(false);
     }
 
     
@@ -53,32 +58,41 @@ public class BalanceGameManager : MonoBehaviour
         Debug.Log(s);
         
         balanceTopicList = JsonConvert.DeserializeObject<BalanceTopicList>(s);
-        TopicCanvas.SetActive(true);
+        BalanceGameListCanvas.SetActive(true);
         
         ShowBalanceTopicListButton();
     }
 
     public void ShowBalanceTopicListButton()
     {
-        for(int i = 0;i < balanceTopicList.triples.Count;i++)
+        int idx = 1;
+        foreach (var balanceGame in balanceTopicList.triples)
         {
-            int index = i;
+            GameObject go = Instantiate(TopicPrefab, Content.transform,false);
+            var itemUI = go.GetComponent<BalanceGameItem>();
+
+            itemUI.no.text = $"{idx++}";
+            itemUI.title.text = $"{balanceGame.topic}";
+            itemUI.creator.text = $"{balanceGame.user_id}";
+            itemUI.playCount.text = $"{idx}";
+
+            Button button = itemUI.button;
             
-            GameObject button = Instantiate(TopicPrefab, Content.transform,false);
-            button.GetComponentInChildren<TMP_Text>().text = $"Topic : {balanceTopicList.triples[i].topic}\nMaker : {balanceTopicList.triples[i].user_id}";
-            Debug.Log("index : " + index);
-            button.GetComponentInChildren<Button>().onClick.AddListener(() => TopicButton(index));
+            int index = idx - 1;
+            button.onClick.AddListener(() => OnClickedTopicItemButton(index));
         }
     }
 
-    public void TopicButton(int index)
+    private void OnClickedTopicItemButton(int index)
     {
-        TopicCanvas.SetActive(false);
-         Debug.Log("index : " + index);
+        Debug.Log("OnClickedTopicItemButton");
+        
+        BalanceGameListCanvas.SetActive(false);
+        
         GetRealBalanceList(balanceTopicList.triples[index].topic_id);
     }
 
-    public void GetRealBalanceList(string topic_id)
+    private void GetRealBalanceList(string topic_id)
     {
         SharedData.Instance.GetRealBalanceGameListRpc(topic_id);
     }
@@ -91,13 +105,13 @@ public class BalanceGameManager : MonoBehaviour
        
         SharedData.Instance.realBalanceGameList = JsonConvert.DeserializeObject<RealBalanceGameList>(temp); 
 
-        
-        
-        
         Debug.Log("실행됨");
         BalanceGameProcess();
     }
 
+    
+    
+    
     private async UniTask BalanceGameProcess()
     {
         Debug.Log("시작");
