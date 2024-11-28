@@ -7,7 +7,7 @@ namespace UI.Profile
     {
         public TMP_InputField[] inputFields;
         
-        private string[] subjects = new string[] {"이름","생년월일(YYYY-MM-DD)","성별(여/남)","주소" };
+        private string[] subjects = new string[] {"이름","생년월일(YYYY-MM-DD)","성별(여자/남자)","주소" };
 
         private void Start()
         {

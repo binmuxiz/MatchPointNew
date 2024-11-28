@@ -96,7 +96,7 @@ public class ProfileInput : MonoBehaviour
             }
             
             _state = State.Ideal;
-            titleText.text = "이상형 입력";
+            titleText.text = "내 이상형";
         }
     }
     
