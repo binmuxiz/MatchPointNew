@@ -128,10 +128,10 @@ public class BalanceGameManager : MonoBehaviour
         int count = 1;  // 1개만 할거임 
         
         // for (int i = 0; i < SharedData.Instance.realBalanceGameList.options.Count; i++)
-        for (int i = 0; i < count; i++)
+        for (int i = 0; i < count; i++)   
         {
             TextClear();
-            SetBalanceGameUnit(i);
+            SetBalanceGameUnit(4);  // 시연 할 두 밸런스게임 둘다 4번째꺼 항목만 시연함  
             await UniTask.WaitUntil(() => SharedData.isChecked >= 2);
             Debug.Log(1111111);
             await UniTask.Delay(1000);
