@@ -137,7 +137,7 @@ public class GroupRoom : Singleton<GroupRoom>
     {
         if (RunnerController.Runner.IsSharedModeMasterClient)
         {
-            await UniTask.Delay(3000);
+            await UniTask.Delay(1500);
         }
         
         Dictionary<string, string> dict = SharedData.LoveDict;
