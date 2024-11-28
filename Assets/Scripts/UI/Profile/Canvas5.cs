@@ -80,13 +80,13 @@ namespace UI.Profile
         {
             Debug.Log("해제");
             buttonData.selected = false;
-            ChangeColor(buttonData.buttonComponent.gameObject.GetComponent<Image>(),Color.white);
+            ChangeColor(buttonData.buttonComponent.gameObject.GetComponentInChildren<Image>(),Color.white);
         }
         else
         {
             Debug.Log("등록");
             buttonData.selected = true;
-            ChangeColor(buttonData.buttonComponent.gameObject.GetComponent<Image>(),Color.gray);
+            ChangeColor(buttonData.buttonComponent.gameObject.GetComponentInChildren<Image>(),Color.gray);
         }
         ReviseOutList(buttonData);
     }
@@ -161,7 +161,7 @@ namespace UI.Profile
             if (buttonDataList[i].selected)
             {
                 buttonDataList[i].selected = false;
-                buttonDataList[i].buttonComponent.gameObject.GetComponent<Image>().color = Color.white;
+                buttonDataList[i].buttonComponent.gameObject.GetComponentInChildren<Image>().color = Color.white;
             }
         }
         personality = new List<string>();

@@ -85,7 +85,7 @@ namespace UI.Profile
 
             foreach (var i in buttonsToClear)
             {
-                ChangeColor(i.gameObject.GetComponent<Image>(),Color.white);
+                ChangeColor(i.gameObject.GetComponentInChildren<Image>(),Color.white);
                 button2List[i] = false;
             }
 

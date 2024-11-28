@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using Fusion;
 using Network;
 using UI;
@@ -46,7 +47,7 @@ public class GameManager: Singleton<GameManager>
 
 
     // 월드 접속 
-    public async void EnterWorld()
+    public async UniTask EnterWorld()
     {
         // todo 월드 접속 UI
         

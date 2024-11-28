@@ -39,13 +39,13 @@ namespace UI.Profile
             if (button2List[buttonComponent])
             {
                 button2List[buttonComponent] = false;
-                ChangeColor(buttonComponent.gameObject.GetComponent<Image>(), Color.white);
+                ChangeColor(buttonComponent.gameObject.GetComponentInChildren<Image>(), Color.white);
                 outList.Remove(buttonComponent.gameObject.GetComponentInChildren<TMP_Text>().text);
             }
             else
             {
                 button2List[buttonComponent] = true;
-                ChangeColor(buttonComponent.gameObject.GetComponent<Image>(), Color.gray);
+                ChangeColor(buttonComponent.gameObject.GetComponentInChildren<Image>(), Color.gray);
                 outList.Add(buttonComponent.gameObject.GetComponentInChildren<TMP_Text>().text);
             }
         }
@@ -68,7 +68,7 @@ namespace UI.Profile
                 if (i == true)
                 {
                     buttonList[buttons[index]] = false;
-                    ChangeColor(buttons[index].gameObject.GetComponent<Image>(), Color.white);
+                    ChangeColor(buttons[index].gameObject.GetComponentInChildren<Image>(), Color.white);
                 }
             }
 

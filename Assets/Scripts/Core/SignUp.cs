@@ -1,4 +1,6 @@
-﻿using Data;
+﻿using Cysharp.Threading.Tasks;
+using Data;
+using Network;
 using Newtonsoft.Json;
 using TMPro;
 using UnityEngine;
@@ -20,10 +22,10 @@ namespace Core
 
         public void SignUpButton()
         {
-            SignUpProcess();            
+            SignUpProcess().Forget();            
         }
 
-        private async void SignUpProcess()
+        private async UniTaskVoid SignUpProcess()
         {
             string id = idInputField.text;
             string pw = passwordInputField.text;
@@ -33,19 +35,33 @@ namespace Core
             request.password = pw;
 
             string data = JsonConvert.SerializeObject(request);
-            await GameManager.NetworkController.SignUp(data);
+            Response response = await GameManager.NetworkController.SignUp(data);
+
+            if (response.Code == 200)
+            {
+                Debug.Log("회원등록됨.");
+            }
+            else
+            {
+                Debug.Log("이미 존재하는 회원?");
+                return;
+            }
+
+            PlayerData.Instance.UserId = id;
             
-            Debug.Log("sign up");
+            ProfileInput.Instance.Show();
+            await UniTask.WaitUntil(() => ProfileInput.Instance.isDone);
             
             await PlayerData.Instance.GetPlayerData(id);
-            
+
             if (PlayerData.Instance.UserId != null)
             {
-                GameManager.Instance.EnterWorld();
+                await GameManager.Instance.EnterWorld();
                 Destroy(parentCanvas.gameObject);
             }
-            
-            //todo 프로필 세팅 캔버스 띄우기
+
+            Debug.Log("회원 가입 완료");
+            ProfileInput.Instance.gameObject.SetActive(false);
         }
     }
 }

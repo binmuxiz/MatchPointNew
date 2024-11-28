@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab551f082988f40adaff46a91632bcdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  popupPrefab: {fileID: 1981132715453450461, guid: 1e767da36a04b1b448ef287226b5cc3a, type: 3}
+  popupPrefab: {fileID: 1981132715453450461, guid: e07e97dacb6c0484185a427a66519a9d, type: 3}
   Title: Yumi Jokami
   Subtitle: Warrior
   Message: dd
