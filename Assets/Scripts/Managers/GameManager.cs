@@ -3,6 +3,7 @@ using Fusion;
 using Network;
 using UI;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public enum GameState
 {
@@ -26,17 +27,36 @@ public class GameManager: Singleton<GameManager>
     
     public GameObject doubleRoomRunnerPrefab;
 
-    public LoadingCanvas loadingCanvas;
+    [Header("UI")]
+    public LoadingUI loadingUI;
+    public GameObject loginCanvas;
+
+    [Header("Game Setings")] 
+    public GameObject FacingRoomGameObject;
+    public GameObject WorldGameObejct;
 
     private void Awake()
     {
         NetworkController = new NetworkController(new HttpClient(BaseURI));
+        
+        WorldGameObejct.SetActive(true);
+        FacingRoomGameObject.SetActive(false);
+        loginCanvas.SetActive(true);
     }
 
 
     // 월드 접속 
     public async void EnterWorld()
     {
+        if (!WorldGameObejct.activeSelf)
+        {
+            WorldGameObejct.SetActive(true);
+        }
+        if (FacingRoomGameObject.activeSelf)
+        {
+            FacingRoomGameObject.SetActive(false);
+        }
+        
         GameState = GameState.World;
         
         var args = new StartGameArgs
@@ -57,7 +77,16 @@ public class GameManager: Singleton<GameManager>
 // 그룹 미팅 룸 조인 
     public async void EnterGroupRoom(RoomInfo roomInfo)
     {
-        await loadingCanvas.Show("접속중...");
+        if (!WorldGameObejct.activeSelf)
+        {
+            WorldGameObejct.SetActive(true);
+        }
+        if (FacingRoomGameObject.activeSelf)
+        {
+            FacingRoomGameObject.SetActive(false);
+        }
+        
+        // await loadingCanvas.Show("접속중...");
         GameState = GameState.Group;
         
         // BalanceGameSettingButton.SetActive(false);
@@ -71,7 +100,7 @@ public class GameManager: Singleton<GameManager>
 
         await SessionManager.Instance.StartSessionAsync(args, groupRoomRunnerPrefab);
 
-        await loadingCanvas.Hide();
+        // await loadingCanvas.Hide();
 
         GroupRoom.Instance.Enter(roomInfo);
     }
@@ -82,6 +111,18 @@ public class GameManager: Singleton<GameManager>
 // 1:1 미팅 룸 조인        
     public async void EnterDoubleRoom(string myId, string otherId)
     {
+        loadingUI.Loading(3000, "1:1 미팅룸 접속중");
+
+        Debug.Log("Entering Double Room");
+        if (WorldGameObejct.activeSelf)
+        {
+            WorldGameObejct.SetActive(false);
+        }
+        if (!FacingRoomGameObject.activeSelf)
+        {
+            FacingRoomGameObject.SetActive(true);
+        }
+        
         Debug.Log("GameManager.EnterDoubleRoom()");
         GameState = GameState.Double;
 
@@ -96,6 +137,8 @@ public class GameManager: Singleton<GameManager>
             PlayerCount = 2,
         };
 
+        CameraController.Instance.SetFacingRoomCamera();
+        
         await SessionManager.Instance.StartSessionAsync(args, doubleRoomRunnerPrefab);
 
         DoubleRoom.Instance.Enter();

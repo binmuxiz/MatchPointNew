@@ -11,10 +11,6 @@ namespace Player
         [SerializeField] private GameObject[] avatarPrefabList;
         public GameObject NameTag;
 
-        private void Awake()
-        {
-            DontDestroyOnLoad(this);
-        }
 
         public async void SetAvatar(Transform parent, string id, string name)
         {

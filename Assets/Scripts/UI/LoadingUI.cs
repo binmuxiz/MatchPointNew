@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace UI
 {
-    public class LoadingCanvas: MonoBehaviour
+    public class LoadingUI: MonoBehaviour
     {
         public CanvasGroup CanvasGroup;
         public TMP_Text loadingText;

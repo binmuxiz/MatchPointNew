@@ -64,6 +64,17 @@ public class CameraController: Singleton<CameraController>
 
     public void SetFacingRoomCamera()
     {
+        mainCamera.transform.position = new Vector3(-118, 3.2f, 79.3f);
+        mainCamera.transform.rotation = Quaternion.Euler(15, 90, 0);
         
+        if (brain != null && cinemachineCamera != null)
+        {
+            brain.enabled = false;
+            cinemachineCamera.Follow = null;    
+        }
+        else
+        {
+            Debug.LogError("null!!!!!!!!");
+        }
     }
 }

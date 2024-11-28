@@ -61,7 +61,6 @@ public class SharedData: NetworkBehaviour
         {        
             AvatarSetter.Instance.SetAvatar(transform, UserId, UserName);
         }
-
     }
 
     public override void Despawned(NetworkRunner runner, bool hasState)
@@ -92,7 +91,9 @@ public class SharedData: NetworkBehaviour
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     public void RpcSetVoteDoneTrigger(bool flag)
     {
+        Debug.Log("RpcSetVoteDoneTrigger");
         VoteDoneTrigger = flag;
+        GroupRoom.Instance.voteDoneProcessActive = true;
     }
     
 

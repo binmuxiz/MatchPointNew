@@ -7,10 +7,16 @@ using Newtonsoft.Json;
 using TMPro;
 using UI;
 using UnityEngine;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
 
-public class GroupRoom: Singleton<GroupRoom>
+public class GroupRoom : Singleton<GroupRoom>
 {
-    public Canvas canvas;
+    [Header("Canvas")] public Canvas canvas;
+    public GameObject waitingCanvas;
+    public GameObject meetingCanvas;
+
+    [FormerlySerializedAs("loadingCanvas")] public LoadingUI loadingUI;
 
     public RoomInfo roomInfo;
     public int maxPlayers;
@@ -18,70 +24,64 @@ public class GroupRoom: Singleton<GroupRoom>
     private const int CountDown = 2;
 
     private bool initalized = false;
-    
+
     public List<SimpleProfile> PlayerProfiles;
-    public GameObject meetingPanel;
-    
+
     public string clickedUserId;
     public SimpleProfile clickedUserInfo;
 
-
     public string votedUserId = null;
 
-    
-    [Header("Top")]
-    [SerializeField] private TMP_Text roomNameText;
+    [Header("Top")] [SerializeField] private TMP_Text roomNameText;
 
-    [Header("Loading")] 
-    public LoadingCanvas LoadingCanvas;
-    
-    
-    [Header("Waiting")] 
-    public GameObject panelWaitingPrefab;
-    public WaitingPanel waitingPanel;
+    [Header("Waiting")] public WaitingPanel waitingPanel;
 
-    [Header("PlayersInfo")] 
-    public Transform playerInfoTransform;
+    [Header("PlayersInfo")] public Transform playerInfoTransform;
     public GameObject playerInfoPrefab;
 
 
+    public Button voteDoneButton;    // 투표 마감 버튼
+    public bool voteDoneProcessActive = false;
 
-    private void Awake()
-    {
-        if (panelWaitingPrefab == null)
-        {
-            Debug.LogError("The panel waiting prefab is null");
-        }
-    }
-    
+
     private void Start()
     {
         canvas.enabled = false;
+        meetingCanvas.SetActive(false);
+        waitingCanvas.SetActive(false);
     }
 
-    
+    private void OnEnable()
+    {
+        DestroyAllChildren(playerInfoTransform);
+        canvas.enabled = false;
+        meetingCanvas.SetActive(false);
+        waitingCanvas.SetActive(false);
+    }
+
     public async void Enter(RoomInfo roomInfo)
     {
-        initalized = false;
-        meetingPanel.SetActive(false);
         canvas.enabled = true;
+
+        initalized = false;
         this.roomInfo = roomInfo;
         roomNameText.text = roomInfo.roomName;
         this.maxPlayers = roomInfo.maxPlayerCount;
-        
-        await LoadingCanvas.Loading(2000, "미팅룸 접속중...");
-        
+
+        await loadingUI.Loading(2000, "미팅룸 접속중...");
+
         Debug.Log("---------------시작 대기중-------------------");
-        this.waitingPanel = Instantiate(panelWaitingPrefab, canvas.transform, false).GetComponent<WaitingPanel>();
+        waitingCanvas.SetActive(true); // 대기 UI 켜기 
         await MonitorPlayerCountAsync(maxPlayers);
-        Destroy(waitingPanel.gameObject);
+        waitingCanvas.SetActive(false); // 대기 UI 끄기 
         Debug.Log("---------------시작------------------------");
-        
+
         InitializePlayerProfiles().Forget();
-        
+
         // await LoadingCanvas.Loading(2000, "미팅 준비중...");
 
-        // await UniTask.WaitUntil(() => initalized);
+        await UniTask.WaitUntil(() => initalized);
+
     }
 
     private async UniTask InitializePlayerProfiles()
@@ -91,7 +91,7 @@ public class GroupRoom: Singleton<GroupRoom>
 
         string myId = PlayerData.Instance.UserId;
         NetworkController networkController = GameManager.NetworkController;
-
+ 
         foreach (var sh in sharedDataList)
         {
             Response response = await networkController.GetSimpleProfile(myId, sh.UserId);
@@ -100,36 +100,53 @@ public class GroupRoom: Singleton<GroupRoom>
                 string data = response.Body;
                 var simpleProfile = JsonConvert.DeserializeObject<SimpleProfile>(data);
                 Debug.Log(simpleProfile);
-                
+
                 GameObject go = Instantiate(playerInfoPrefab, playerInfoTransform, false);
                 PlayerInfoItem infoItem = go.GetComponent<PlayerInfoItem>();
                 infoItem.SetPlayerInfoItem(sh.UserId, simpleProfile);
             }
         }
-        
-        meetingPanel.SetActive(true);
+
+        meetingCanvas.SetActive(true);
 
         initalized = true;
     }
 
-    
-    
+
     // 종료 버튼 눌렀을때
     public void OnClickedVoteDoneButton()
     {
-        Debug.Log("OnClickedVoteDoneButton");
-        VoteDoneProcess();
+        if (!RunnerController.Runner.IsSharedModeMasterClient)
+        {
+            return;
+        }
+        SharedData.Instance.RpcSetVoteDoneTrigger(true);
     }
-    
+
+    private void Update()
+    {
+        if (SharedData.VoteDoneTrigger && voteDoneProcessActive)
+        {
+            Debug.Log("VoteDoneProcess");
+            voteDoneProcessActive = false;
+            VoteDoneProcess();
+        }
+    }
+
     private async void VoteDoneProcess()
     {
+        if (RunnerController.Runner.IsSharedModeMasterClient)
+        {
+            await UniTask.Delay(3000);
+        }
+        
         Dictionary<string, string> dict = SharedData.LoveDict;
 
         string myId = PlayerData.Instance.UserId;
 
         string mySelection = null;
         string yourSelection = null;
-        
+
         if (dict.ContainsKey(myId))
         {
             mySelection = dict[myId];
@@ -138,8 +155,7 @@ public class GroupRoom: Singleton<GroupRoom>
         if (mySelection != null && dict.ContainsKey(mySelection))
         {
             yourSelection = dict[mySelection];
-        } 
-        
+        }
 
         if (mySelection == null)
         {
@@ -153,10 +169,7 @@ public class GroupRoom: Singleton<GroupRoom>
         {
             if (myId == yourSelection)
             {
-                Debug.Log("1:1 미팅룸으로 이동");
-                // GameManager.Instance.EnterDoubleRoom(myId, mySelection);
-                meetingPanel.SetActive(false);
-                DestroyAllChildren(playerInfoTransform);
+                GoToDoubleRoom(myId, mySelection);
                 return;
             }
             else
@@ -164,19 +177,26 @@ public class GroupRoom: Singleton<GroupRoom>
                 Debug.Log("서로 선택안됨");
             }
         }
+
         Debug.Log("월드로 돌아감 ");
-        GameManager.Instance.EnterWorld();
-        meetingPanel.SetActive(false);
-        DestroyAllChildren(playerInfoTransform);
+        GoToWorld();
     }
-    
+
 
     private void GoToWorld()
     {
         canvas.enabled = false;
         GameManager.Instance.EnterWorld();
     }
+
+    private void GoToDoubleRoom(string myId, string mySelection)
+    {
+        Debug.Log("1:1 미팅룸으로 이동");
+        canvas.enabled = false;
+        GameManager.Instance.EnterDoubleRoom(myId, mySelection);
+    }
     
+
     private async UniTask MonitorPlayerCountAsync(int maxPlayerCount)
     {
         waitingPanel.ActiveCounterMembers();
