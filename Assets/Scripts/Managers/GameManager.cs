@@ -48,6 +48,8 @@ public class GameManager: Singleton<GameManager>
     // 월드 접속 
     public async void EnterWorld()
     {
+        // todo 월드 접속 UI
+        
         if (!WorldGameObejct.activeSelf)
         {
             WorldGameObejct.SetActive(true);

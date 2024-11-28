@@ -1303,7 +1303,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1948873556}
         m_TargetAssemblyTypeName: BalanceGameManager, Assembly-CSharp
-        m_MethodName: StartBalanceGameButton
+        m_MethodName: ShowBalanceGameListButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1918,7 +1918,10 @@ MonoBehaviour:
   groupRoomSpwanPosition: {fileID: 0}
   groupRoomRunnerPrefab: {fileID: 0}
   doubleRoomRunnerPrefab: {fileID: 2607193962398319913, guid: 28fba703f1056ce46bdd39e94e71c316, type: 3}
-  loadingCanvas: {fileID: 0}
+  loadingUI: {fileID: 0}
+  loginCanvas: {fileID: 0}
+  FacingRoomGameObject: {fileID: 0}
+  WorldGameObejct: {fileID: 0}
 --- !u!4 &2028484390
 Transform:
   m_ObjectHideFlags: 0
@@ -2430,7 +2433,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: -564.66003}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &659780339375414196
 GameObject:
@@ -2670,8 +2673,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 6977174849661424310}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 43.83, y: 30}
   m_Pivot: {x: 0, y: 1}
@@ -3302,7 +3305,7 @@ RectTransform:
   m_Father: {fileID: 231951602314523440}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4378,7 +4381,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &8393189107489579140
 MonoBehaviour:
   m_ObjectHideFlags: 0

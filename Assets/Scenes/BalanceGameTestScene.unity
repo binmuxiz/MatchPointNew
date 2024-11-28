@@ -70214,7 +70214,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3843359407184838696, guid: 42c3b32694103ab428e87c0f3f150361, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: StartBalanceGameButton
+      value: ShowBalanceGameListButton
       objectReference: {fileID: 0}
     - target: {fileID: 3843359407184838696, guid: 42c3b32694103ab428e87c0f3f150361, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using Fusion;
 using Newtonsoft.Json;
 using TMPro;
 using UI;
@@ -15,18 +14,15 @@ public class BalanceGameManager : MonoBehaviour
     
     public GameObject Content;
     public GameObject TopicPrefab;
-    public GameObject BalanceGameButton;
-    public GameObject BalanceGameListCanvas;
-    public GameObject RealBalanceGameCanvas;
+    public GameObject BalanceGameListPanel;
+    public GameObject BalanceGamePlayPanel;
     
     
-    public GameObject BalanceGameUnit;
     public GameObject LeftButton;
     public GameObject RightButton;
     public TMP_Text BalanceGameTopicText; 
     
     public BalanceTopicList balanceTopicList;
-    public RealBalanceGameList realBalanceGameList;
 
     public TMP_Text LeftNameText1;
     public TMP_Text LeftNameText2;
@@ -37,33 +33,43 @@ public class BalanceGameManager : MonoBehaviour
     public List<TMP_Text> nameText;
     private bool isShowed = false;
     
-    //public int index;
 
     void Awake()
     {
         if (Instance == null) Instance = this;
         color = LeftButton.GetComponentInChildren<Image>().color;
         
-        BalanceGameListCanvas.SetActive(false);
+        
     }
 
-    
-    public async void StartBalanceGameButton()
+    private void OnEnable()
     {
-        BalanceGameButton.SetActive(false);
-        
+        BalanceGameListPanel.SetActive(false);
+        BalanceGamePlayPanel.SetActive(false);
+    }
+
+
+    public void CloseBalanceGameListPanel()
+    {
+        BalanceGameListPanel.SetActive(false);
+    }
+    
+    
+    public async void ShowBalanceGameListButton()  // 밸런스 게임 목록 버튼 클릭
+    {
         var response = await GameManager.NetworkController.GetBalanceGameList();
         var s = response.Body;
         
         Debug.Log(s);
         
         balanceTopicList = JsonConvert.DeserializeObject<BalanceTopicList>(s);
-        BalanceGameListCanvas.SetActive(true);
+        BalanceGameListPanel.SetActive(true);  // UI 켜기 
         
-        ShowBalanceTopicListButton();
+        SetBalanceGameListData();  // 데이터 받아오기 
     }
+    
 
-    public void ShowBalanceTopicListButton()
+    private void SetBalanceGameListData()
     {
         int idx = 1;
         foreach (var balanceGame in balanceTopicList.triples)
@@ -82,12 +88,14 @@ public class BalanceGameManager : MonoBehaviour
             button.onClick.AddListener(() => OnClickedTopicItemButton(index));
         }
     }
+    
+    
 
-    private void OnClickedTopicItemButton(int index)
+    private void OnClickedTopicItemButton(int index)   // 밸런스게임 아이템 선택 
     {
         Debug.Log("OnClickedTopicItemButton");
         
-        BalanceGameListCanvas.SetActive(false);
+        BalanceGameListPanel.SetActive(false);      // 밸런스 게임 목록 UI 끄기
         
         GetRealBalanceList(balanceTopicList.triples[index].topic_id);
     }
@@ -97,7 +105,7 @@ public class BalanceGameManager : MonoBehaviour
         SharedData.Instance.GetRealBalanceGameListRpc(topic_id);
     }
 
-    public async void SyncBalanceGameList(string topic_id)
+    public async void SyncBalanceGameList(string topic_id)   
     {
         var response = await GameManager.NetworkController.GetBalanceGame(topic_id);
         string temp = response.Body;
@@ -112,20 +120,21 @@ public class BalanceGameManager : MonoBehaviour
     
     
     
-    private async UniTask BalanceGameProcess()
+    private async UniTask BalanceGameProcess()   // 밸런스 게임 프로세스 
     {
         Debug.Log("시작");
-        BalanceGameUnit.SetActive(true);
-        RealBalanceGameCanvas.SetActive(true);
-        Debug.Log("ㅁㄻㄴㄻㄴㄻㄴㄹ");
+        BalanceGamePlayPanel.SetActive(true);
+
+        int count = 1;  // 1개만 할거임 
         
-        for (int i = 0; i < SharedData.Instance.realBalanceGameList.options.Count; i++)
+        // for (int i = 0; i < SharedData.Instance.realBalanceGameList.options.Count; i++)
+        for (int i = 0; i < count; i++)
         {
             TextClear();
             SetBalanceGameUnit(i);
             await UniTask.WaitUntil(() => SharedData.isChecked >= 2);
             Debug.Log(1111111);
-            await UniTask.Delay(2000);
+            await UniTask.Delay(1000);
             
             ButtonClear();
             TurnOnResultText();
@@ -136,12 +145,12 @@ public class BalanceGameManager : MonoBehaviour
             TurnOnResultText();
             
             SharedData.Instance.ClearRpc();
-            if (i == SharedData.Instance.realBalanceGameList.options.Count - 1)
-            {
-                BalanceGameUnit.SetActive(false);
-                RealBalanceGameCanvas.SetActive(false);
-            }
         }
+        BalanceGamePlayPanel.SetActive(false);  // 밸런스게임 플레이 UI 끄기
+        
+        // todo 밸런스 게임 종료 UI 띄울시간 있을까???
+        
+        DoubleRoom.Instance.ShowDefaultPanel();
     }
 
     private void SetBalanceGameUnit(int index)
@@ -151,7 +160,7 @@ public class BalanceGameManager : MonoBehaviour
         RightButton.GetComponentInChildren<TMP_Text>().text = SharedData.Instance.realBalanceGameList.options[index].right;
     }
 
-    public void ButtonClicked(int index)
+    public void ButtonClicked(int index)  // 0이면 left 선택, 1이면 right 선택 
     {
         if (index == 0)
         {
@@ -203,8 +212,4 @@ public class BalanceGameManager : MonoBehaviour
             }
         }
     }
-
-    
-    
-    
 }
