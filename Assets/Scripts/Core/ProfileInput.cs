@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using Data;
 using Network;
 using Newtonsoft.Json;
@@ -16,14 +17,13 @@ public class ProfileInput : MonoBehaviour
     public static ProfileInput Instance;
     
     public State _state = State.Mine;
+    public bool isDone;
     private int _index = 0;
-    
-    // 게임 오브젝트
+
+    [SerializeField] private Canvas rootCanvas;
     [SerializeField] private Button nextButton;
     [SerializeField] private GameObject[] Canvases;
-
     [SerializeField] private TMP_Text titleText;
-
     [SerializeField] private GameObject profileInputDoneCanvas;
      
     delegate void DetailNextButton();
@@ -37,9 +37,11 @@ public class ProfileInput : MonoBehaviour
      
     private void Awake()
     {
-        if (Instance == null) Instance = this;
+        if (Instance == null)
+            Instance = this;
+        
+        rootCanvas.enabled = false;
     }
-    
 
     private void Start()
     {
@@ -57,6 +59,17 @@ public class ProfileInput : MonoBehaviour
         Debug.Log($"UserManager id 확인 : {PlayerData.Instance.UserId}");
     }
 
+    public void Show()
+    {
+        rootCanvas.enabled = true;
+        isDone = false;
+    }
+
+    public void Hide()
+    {
+        rootCanvas.enabled = false;
+    }
+    
     async void ClickNextButton()
     {
         detailNextButton += detailNextButtons[_index].DetailNextButton;
@@ -79,22 +92,21 @@ public class ProfileInput : MonoBehaviour
             }
             else
             {
-                ProfileInputDone();
+                ProfileInputDone().Forget();
             }
+            
             _state = State.Ideal;
             titleText.text = "이상형 입력";
         }
     }
-
     
-    private async void ProfileInputDone()
+    private async UniTaskVoid ProfileInputDone()
     {
         // 프로필 데이터 전송 
         string userId = PlayerData.Instance.UserId;
         string data = JsonConvert.SerializeObject(profile);
         
         var response = await _networkController.PostProfile(userId, data);
-
         if (response.Code == 200)
         {
             var registerUserResponse = JsonConvert.DeserializeObject<RegisterUserResponse>(response.Body);
@@ -103,6 +115,7 @@ public class ProfileInput : MonoBehaviour
             // nextButton.gameObject.SetActive(false);
         
             profileInputDoneCanvas.SetActive(true);
+            isDone = true;
         }
         else
         {

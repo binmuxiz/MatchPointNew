@@ -29,7 +29,7 @@ namespace Network
         // 3. 프로필 등록
         public async UniTask<Response> PostProfile(string userId, string data)
         {
-            return await _httpClient.SendPostRequestAsync($"user_info/{userId}", data);
+            return await _httpClient.SendPostRequestAsync($"/user_info/{userId}", data);
         }
 
                 
