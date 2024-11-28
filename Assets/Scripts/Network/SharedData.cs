@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using Fusion;
 using Player;
 using UnityEngine;
@@ -27,6 +28,7 @@ public class SharedData: NetworkBehaviour
     public static bool Trigger { get; private set; } = false;
 
     public static bool VoteDoneTrigger { get; private set; } = false;
+    
     public static bool BalanceGameTrigger { get; private set; } = false;
     
     
@@ -89,11 +91,10 @@ public class SharedData: NetworkBehaviour
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    public void RpcSetVoteDoneTrigger(bool flag)
+    public void RpcVoteDone()
     {
         Debug.Log("RpcSetVoteDoneTrigger");
-        VoteDoneTrigger = flag;
-        GroupRoom.Instance.voteDoneProcessActive = true;
+        GroupRoom.Instance.AggregationProcess();
     }
     
 

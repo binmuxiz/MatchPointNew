@@ -31,7 +31,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 654523547871253570}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -109,7 +108,6 @@ RectTransform:
   m_Children:
   - {fileID: 654523547326826478}
   m_Father: {fileID: 2492307753449425596}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -200,7 +198,6 @@ RectTransform:
   - {fileID: 8866041550638754441}
   - {fileID: 8866041549877139155}
   m_Father: {fileID: 6173970624805275151}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -271,7 +268,6 @@ RectTransform:
   - {fileID: 5375109330746893661}
   - {fileID: 6495228996181026644}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -304,7 +300,7 @@ MonoBehaviour:
   - {fileID: 8866041549877139152}
 --- !u!95 &3612199487828428144
 Animator:
-  serializedVersion: 5
+  serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -318,6 +314,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -369,7 +366,6 @@ RectTransform:
   - {fileID: 3595197682247799838}
   - {fileID: 9154810521601959071}
   m_Father: {fileID: 6173970624805275151}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -504,6 +500,10 @@ PrefabInstance:
       propertyPath: m_text
       value: Message
       objectReference: {fileID: 0}
+    - target: {fileID: 6665946615501062620, guid: bfd39ba89ff5f4d7d8bc6227c96f54bd, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -626,6 +626,10 @@ PrefabInstance:
     - target: {fileID: 8383344148730722992, guid: 9eb85e4633b7e44f89c50c1b5fbb9760, type: 3}
       propertyPath: m_HorizontalAlignment
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8383344148730722992, guid: 9eb85e4633b7e44f89c50c1b5fbb9760, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1061,6 +1065,10 @@ PrefabInstance:
       propertyPath: m_text
       value: Challenge
       objectReference: {fileID: 0}
+    - target: {fileID: 6665946615501062620, guid: bfd39ba89ff5f4d7d8bc6227c96f54bd, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1204,6 +1212,10 @@ PrefabInstance:
       propertyPath: m_text
       value: Ranking
       objectReference: {fileID: 0}
+    - target: {fileID: 6665946615501062620, guid: bfd39ba89ff5f4d7d8bc6227c96f54bd, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1330,6 +1342,10 @@ PrefabInstance:
     - target: {fileID: 8383344148730722992, guid: 9392a7e58d4c142e4ba373a8efc05e26, type: 3}
       propertyPath: m_HorizontalAlignment
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8383344148730722992, guid: 9392a7e58d4c142e4ba373a8efc05e26, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1875,6 +1891,18 @@ PrefabInstance:
     - target: {fileID: 6713848661790791034, guid: 3be21f080364c4f8bb91d0d5926cf409, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6852982441328289898, guid: 3be21f080364c4f8bb91d0d5926cf409, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265151271798798635, guid: 3be21f080364c4f8bb91d0d5926cf409, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
+      objectReference: {fileID: 0}
+    - target: {fileID: 8293459901583694459, guid: 3be21f080364c4f8bb91d0d5926cf409, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

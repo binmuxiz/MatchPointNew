@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using Data;
 using Network;
 using Newtonsoft.Json;
+using Ricimi;
 using TMPro;
 using UI;
 using UnityEngine;
@@ -40,8 +41,12 @@ public class GroupRoom : Singleton<GroupRoom>
     public GameObject playerInfoPrefab;
 
 
+
+    [Header("Love Selection")]
     public Button voteDoneButton;    // 투표 마감 버튼
-    public bool voteDoneProcessActive = false;
+    public bool loveResult = false;
+    public bool aggregationDone = false;
+    public PopupOpener popupOpener;
 
 
     private void Start()
@@ -79,8 +84,12 @@ public class GroupRoom : Singleton<GroupRoom>
         InitializePlayerProfiles().Forget();
 
         // await LoadingCanvas.Loading(2000, "미팅 준비중...");
-
+        
         await UniTask.WaitUntil(() => initalized);
+
+
+        await UniTask.WaitUntil(() => SharedData.Trigger);  // 투표 집계 완료 시 true
+        
 
     }
 
@@ -94,6 +103,8 @@ public class GroupRoom : Singleton<GroupRoom>
  
         foreach (var sh in sharedDataList)
         {
+            // if (sh.UserId == myId) continue; // 내 프로필 빼고
+            
             Response response = await networkController.GetSimpleProfile(myId, sh.UserId);
             if (response.Code == 200)
             {
@@ -113,32 +124,28 @@ public class GroupRoom : Singleton<GroupRoom>
     }
 
 
-    // 종료 버튼 눌렀을때
-    public void OnClickedVoteDoneButton()
+    
+    public void OnClickedVoteDoneButton()    // 종료 버튼 눌렀을때
     {
-        if (!RunnerController.Runner.IsSharedModeMasterClient)
-        {
-            return;
-        }
-        SharedData.Instance.RpcSetVoteDoneTrigger(true);
+        // if (!RunnerController.Runner.IsSharedModeMasterClient) 
+        // {
+        //     return;
+        // }
+        SharedData.Instance.RpcVoteDone();
     }
 
-    private void Update()
-    {
-        if (SharedData.VoteDoneTrigger && voteDoneProcessActive)
-        {
-            Debug.Log("VoteDoneProcess");
-            voteDoneProcessActive = false;
-            VoteDoneProcess();
-        }
-    }
 
-    private async void VoteDoneProcess()
+    public async void AggregationProcess()    // 결과 집계 
     {
-        if (RunnerController.Runner.IsSharedModeMasterClient)
-        {
-            await UniTask.Delay(1500);
-        }
+        voteDoneButton.interactable = false;  // 버튼 비활성화
+        popupOpener.OpenPopup();        // 결과 집계 팝업
+        
+        loveResult = false;
+        
+        // if (RunnerController.Runner.IsSharedModeMasterClient)
+        // {
+        //     await UniTask.Delay(1500);
+        // }
         
         Dictionary<string, string> dict = SharedData.LoveDict;
 
@@ -169,19 +176,33 @@ public class GroupRoom : Singleton<GroupRoom>
         {
             if (myId == yourSelection)
             {
-                GoToDoubleRoom(myId, mySelection);
-                return;
+                loveResult = true;
             }
             else
             {
-                Debug.Log("서로 선택안됨");
             }
         }
 
-        Debug.Log("월드로 돌아감 ");
-        GoToWorld();
+        aggregationDone = true;
     }
 
+
+    public void ShowLoveResult()
+    {
+        aggregationDone = false;
+
+        if (loveResult)
+        {
+            Debug.Log("작대기 성공");
+            GoToDoubleRoom(PlayerData.Instance.UserId, votedUserId);
+        }
+        else
+        {
+            Debug.Log("작대기 실패");
+            GoToWorld();
+        }
+    }
+    
 
     private void GoToWorld()
     {
