@@ -1,63 +1,69 @@
-﻿using System.Collections;
-using Unity.Cinemachine;
+﻿using Unity.Cinemachine;
 using UnityEngine;
 
 public class CameraController: Singleton<CameraController>
 {
+    public Camera mainCamera;
     public CinemachineBrain brain;
-
     public CinemachineCamera cinemachineCamera;
-
-    public GameObject moveCamera;
-    public GameObject lockCamera;
-    public GameObject facingRoomCamera;
 
     private void Awake()
     {
-        DontDestroyOnLoad(this);
+        mainCamera = Camera.main;
         
-        if (brain != null)
+        if (mainCamera == null)
         {
-            brain.enabled = false;
+            Debug.LogError("Main Camera is null!!!!!!!!!!!!");
         }
-
-        moveCamera.SetActive(true);
-        lockCamera.SetActive(false);
-        facingRoomCamera.SetActive(false);
+        
+        else
+        {
+            brain = mainCamera.GetComponent<CinemachineBrain>();
+            if (brain != null)
+            {
+                brain.enabled = false;
+            }
+        }
     }
 
+    
 
     public void SetWorldCamera(Transform camFollowTarget)
     {
-        moveCamera.SetActive(true);
-        lockCamera.SetActive(false);
-        facingRoomCamera.SetActive(false);
-
-        Debug.Log("Set World Camera");
-        brain.enabled = true;
-
-        cinemachineCamera.Follow = camFollowTarget.transform;
+        mainCamera.transform.position = new Vector3(9, 3, 0);
+        mainCamera.transform.rotation = Quaternion.Euler(15, 90, 0); 
         
-        // camFollow.target = camPosition;
-        // camRotate.enabled = true;
-        // camFollow.enabled = true;
+        if (brain != null && cinemachineCamera != null)
+        {
+            brain.enabled = true;
+            cinemachineCamera.Follow = camFollowTarget.transform;
+        }
+        else
+        {
+            Debug.LogError("null!!!!!!!!");
+        }
     }
     
     
 
-    public void SetGroupMeetingRoomCamera()  
+    public void SetGroupMeetingRoomCamera()
     {
-        moveCamera.SetActive(false);
-        lockCamera.SetActive(true);
+        mainCamera.transform.position = new Vector3(27, 3.35f, 3.5f);
+        mainCamera.transform.rotation = Quaternion.Euler(20, 128, 0.6f);
 
-        // 그룹룸 카메라 고정
-        brain.enabled = false;
+        if (brain != null && cinemachineCamera != null)
+        {
+            brain.enabled = false;
+            cinemachineCamera.Follow = null;    
+        }
+        else
+        {
+            Debug.LogError("null!!!!!!!!");
+        }
     }
 
     public void SetFacingRoomCamera()
     {
-        moveCamera.SetActive(false);
-        lockCamera.SetActive(false);
-        facingRoomCamera.SetActive(true);
+        
     }
 }
