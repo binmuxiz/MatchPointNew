@@ -55,8 +55,6 @@ public class ProfileInput : MonoBehaviour
         detailNextButtons[3] = GetComponent<Canvas4>();
         detailNextButtons[4] = GetComponent<Canvas5>();
         nextButton.onClick.AddListener(ClickNextButton);
-        
-        Debug.Log($"UserManager id 확인 : {PlayerData.Instance.UserId}");
     }
 
     public void Show()

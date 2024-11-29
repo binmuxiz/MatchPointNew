@@ -77,6 +77,7 @@ public class BalanceGameManager : MonoBehaviour
             GameObject go = Instantiate(TopicPrefab, Content.transform,false);
             var itemUI = go.GetComponent<BalanceGameItem>();
 
+            int index = idx - 1;
             itemUI.no.text = $"{idx++}";
             itemUI.title.text = $"{balanceGame.topic}";
             itemUI.creator.text = $"{balanceGame.user_id}";
@@ -84,7 +85,6 @@ public class BalanceGameManager : MonoBehaviour
 
             Button button = itemUI.button;
             
-            int index = idx - 1;
             button.onClick.AddListener(() => OnClickedTopicItemButton(index));
         }
     }
@@ -133,7 +133,6 @@ public class BalanceGameManager : MonoBehaviour
             TextClear();
             SetBalanceGameUnit(4);  // 시연 할 두 밸런스게임 둘다 4번째꺼 항목만 시연함  
             await UniTask.WaitUntil(() => SharedData.isChecked >= 2);
-            Debug.Log(1111111);
             await UniTask.Delay(1000);
             
             ButtonClear();

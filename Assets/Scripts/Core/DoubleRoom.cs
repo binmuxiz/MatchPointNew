@@ -1,13 +1,18 @@
 using System;
 using Cysharp.Threading.Tasks;
 using Cysharp.Threading.Tasks.Triggers;
+using Sound;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class DoubleRoom : Singleton<DoubleRoom>
 {
     public GameObject meetingResultPanel;
     
     public GameObject defaultPanel;
+
+    private SoundController soundController;
 
     private void Start()
     {
@@ -22,14 +27,18 @@ public class DoubleRoom : Singleton<DoubleRoom>
     }
 
 
-    public void Enter()
+    public void Enter(SoundController soundController)
     {
         ShowDefaultPanel();
+        this.soundController = soundController;
     }
 
-    public void ShowDefaultPanel()
+    public async void ShowDefaultPanel()
     {
         defaultPanel.SetActive(true);
+        
+        await UniTask.Delay(TimeSpan.FromSeconds(1));
+        this.soundController.Play();
     }
     
 

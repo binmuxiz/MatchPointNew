@@ -45,7 +45,15 @@ namespace UI
         {
             this.userId = userId;
             SimpleProfile = simpleProfile;
-            nameText.text = simpleProfile.name;
+            
+            if (PlayerData.Instance.UserId == userId) // 나 
+            {
+                nameText.text = simpleProfile.name + "(니)";
+            }
+            else
+            {
+                nameText.text = simpleProfile.name;
+            }
 
             switch (userId)
             {

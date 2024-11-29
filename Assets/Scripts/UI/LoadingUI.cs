@@ -18,15 +18,15 @@ namespace UI
         public async UniTask Loading(int ms, string message)
         {
             loadingText.text = message;
-            await Fader.FadeIn(CanvasGroup, 1f);
+            Fader.FadeIn(CanvasGroup);
             await UniTask.Delay(ms); // 대기화면 
             await Fader.FadeOut(CanvasGroup, 1f);
         }
 
-        public async UniTask Show(string message)
+        public void Show(string message)
         {
             loadingText.text = message;
-            await Fader.FadeIn(CanvasGroup, 1f);
+            Fader.FadeIn(CanvasGroup);
         }
 
         public async UniTask Hide()
