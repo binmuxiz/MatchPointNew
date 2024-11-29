@@ -47,6 +47,7 @@ public class GroupRoom : Singleton<GroupRoom>
     public bool loveResult = false;
     public bool aggregationDone = false;
     public PopupOpener popupOpener;
+    public GameObject loveSelectionResultCanvas;
 
 
     private void Start()
@@ -88,7 +89,7 @@ public class GroupRoom : Singleton<GroupRoom>
         await UniTask.WaitUntil(() => initalized);
 
 
-        await UniTask.WaitUntil(() => SharedData.Trigger);  // 투표 집계 완료 시 true
+        // await UniTask.WaitUntil(() => SharedData.Trigger);  // 투표 집계 완료 시 true
         
 
     }
@@ -187,18 +188,25 @@ public class GroupRoom : Singleton<GroupRoom>
     }
 
 
-    public void ShowLoveResult()
+    public async void ShowLoveResult()
     {
         aggregationDone = false;
 
         if (loveResult)
         {
             Debug.Log("작대기 성공");
+            loveSelectionResultCanvas.SetActive(true);
+            await UniTask.Delay(TimeSpan.FromSeconds(3));   // 3초 보여주고 
+            loveSelectionResultCanvas.SetActive(false);
             GoToDoubleRoom(PlayerData.Instance.UserId, votedUserId);
+
         }
         else
         {
             Debug.Log("작대기 실패");
+            loveSelectionResultCanvas.SetActive(true);
+            await UniTask.Delay(TimeSpan.FromSeconds(3));
+            loveSelectionResultCanvas.SetActive(false);
             GoToWorld();
         }
     }
