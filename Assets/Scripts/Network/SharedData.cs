@@ -119,10 +119,11 @@ public class SharedData: NetworkBehaviour
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    public void DoneRpc()
+    public void DoneRpc(string userName, int index)
     {
         isChecked++;
         Debug.Log("체크 수 : " + isChecked);
+        BalanceGameManager.Instance.OnClicked(userName, index);
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
@@ -132,35 +133,37 @@ public class SharedData: NetworkBehaviour
         Debug.Log("체크 수 초기화 : " + isChecked);
     }
 
-    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    public void PublicizeProcessRpc(int buttonNum,string name)
-    {
-        if (buttonNum == 0)
-        {
-            if (string.IsNullOrEmpty(BalanceGameManager.Instance.LeftNameText1.text))
-            {
-                BalanceGameManager.Instance.LeftNameText1.text = name;
-            }
-            else
-            {
-                BalanceGameManager.Instance.LeftNameText2.text = name;
-            }
-        }
-        else
-        {
-            if (string.IsNullOrEmpty(BalanceGameManager.Instance.RightNameText1.text))
-            {
-                BalanceGameManager.Instance.RightNameText1.text = name;
-            }
-            else
-            {
-                BalanceGameManager.Instance.RightNameText2.text = name;
-            }
-        }
-    }
+    
+    
+    // [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    // public void PublicizeProcessRpc(int buttonNum,string name)
+    // {
+    //     if (buttonNum == 0)
+    //     {
+    //         if (string.IsNullOrEmpty(BalanceGameManager.Instance.LeftNameText1.text))
+    //         {
+    //             BalanceGameManager.Instance.LeftNameText1.text = name;
+    //         }
+    //         else
+    //         {
+    //             BalanceGameManager.Instance.LeftNameText2.text = name;
+    //         }
+    //     }
+    //     else
+    //     {
+    //         if (string.IsNullOrEmpty(BalanceGameManager.Instance.RightNameText1.text))
+    //         {
+    //             BalanceGameManager.Instance.RightNameText1.text = name;
+    //         }
+    //         else
+    //         {
+    //             BalanceGameManager.Instance.RightNameText2.text = name;
+    //         }
+    //     }
+    // }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.StateAuthority)]
-    public void SyncNameTagRpc(NetworkObject nameTag,string name)
+    public void SyncNameTagRpc(NetworkObject nameTag, string name)
     {
         Debug.Log("실행됨");
         Debug.Log(nameTag.GetComponentInChildren<TMP_Text>());

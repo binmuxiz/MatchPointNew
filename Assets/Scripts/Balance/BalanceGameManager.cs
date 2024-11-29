@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using TMPro;
 using UI;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class BalanceGameManager : MonoBehaviour
@@ -24,15 +22,19 @@ public class BalanceGameManager : MonoBehaviour
     
     public BalanceTopicList balanceTopicList;
 
-    public TMP_Text LeftNameText1;
-    public TMP_Text LeftNameText2;
-    public TMP_Text RightNameText1;
-    public TMP_Text RightNameText2;
+    // public TMP_Text LeftNameText1;
+    // public TMP_Text LeftNameText2;
+    // public TMP_Text RightNameText1;
+    // public TMP_Text RightNameText2;
 
     private Color color;
-    public List<TMP_Text> nameText;
+    // public List<TMP_Text> nameText;
     private bool isShowed = false;
-    
+
+
+    [Header("Selection")] 
+    public GameObject[] leftSelections;
+    public GameObject[] rightSelections;
 
     void Awake()
     {
@@ -123,6 +125,8 @@ public class BalanceGameManager : MonoBehaviour
     private async UniTask BalanceGameProcess()   // 밸런스 게임 프로세스 
     {
         Debug.Log("시작");
+        SelectionClear();           
+        ButtonClear();             
         BalanceGamePlayPanel.SetActive(true);
 
         int count = 1;  // 1개만 할거임 
@@ -130,26 +134,35 @@ public class BalanceGameManager : MonoBehaviour
         // for (int i = 0; i < SharedData.Instance.realBalanceGameList.options.Count; i++)
         for (int i = 0; i < count; i++)   
         {
-            TextClear();
+            // TextClear();
+            SelectionClear();           // 선택한 오브젝트 다 끄기 
+            ButtonClear();              
             SetBalanceGameUnit(4);  // 시연 할 두 밸런스게임 둘다 4번째꺼 항목만 시연함  
+            
             await UniTask.WaitUntil(() => SharedData.isChecked >= 2);
             await UniTask.Delay(1000);
             
-            ButtonClear();
-            TurnOnResultText();
+            // TurnOnResultText();
             
-            Debug.Log("서로 것 공개");
-            await UniTask.Delay(2000);
+            // Debug.Log("서로 것 공개");
+            // await UniTask.Delay(2000);
             
-            TurnOnResultText();
+            // TurnOnResultText();
             
             SharedData.Instance.ClearRpc();
         }
         BalanceGamePlayPanel.SetActive(false);  // 밸런스게임 플레이 UI 끄기
         
-        // todo 밸런스 게임 종료 UI 띄울시간 있을까???
-        
         DoubleRoom.Instance.ShowDefaultPanel();
+    }
+
+
+    private void SelectionClear()
+    {
+        leftSelections[0].SetActive(false);
+        leftSelections[1].SetActive(false);
+        rightSelections[0].SetActive(false);
+        rightSelections[1].SetActive(false);
     }
 
     private void SetBalanceGameUnit(int index)
@@ -159,56 +172,94 @@ public class BalanceGameManager : MonoBehaviour
         RightButton.GetComponentInChildren<TMP_Text>().text = SharedData.Instance.realBalanceGameList.options[index].right;
     }
 
+    
     public void ButtonClicked(int index)  // 0이면 left 선택, 1이면 right 선택 
     {
         if (index == 0)
         {
             Debug.Log("LeftButton");
-            LeftButton.GetComponentInChildren<Image>().color = Color.gray;
+            LeftButton.GetComponent<Image>().color = Color.gray;
+            // leftSelections[0].SetActive(true);
+            
         }
         else
         {
             Debug.Log("RightButton");
-            RightButton.GetComponentInChildren<Image>().color = Color.gray;
+            RightButton.GetComponent<Image>().color = Color.gray; 
+            // rightSelections[0].SetActive(true);
         }
-        SharedData.Instance.DoneRpc();
-        SharedData.Instance.PublicizeProcessRpc(index,PlayerData.Instance.UserId);
+        
+        SharedData.Instance.DoneRpc(SharedData.Instance.UserName, index);
+        //SharedData.Instance.PublicizeProcessRpc(index,PlayerData.Instance.UserId);
     }
 
     private void ButtonClear()
     {
-        LeftButton.GetComponentInChildren<Image>().color = color;
-        RightButton.GetComponentInChildren<Image>().color = color;
+        LeftButton.GetComponent<Image>().color = color;
+        RightButton.GetComponent<Image>().color = color;
     }
 
-    private void TextClear()
+    public void OnClicked(string userName, int index)
     {
-        LeftNameText1.text = "";
-        LeftNameText2.text = "";
-        
-        RightNameText1.text = "";
-        RightNameText2.text = "";
-    }
-
-    private void TurnOnResultText()
-    {
-        if (!isShowed)
+        if (index == 0)
         {
-            Debug.Log("텍스트 켜짐");
-            isShowed = true;
-            foreach (var i in nameText)
+            if (userName.Contains("은빈"))
             {
-                i.gameObject.SetActive(true);
+                leftSelections[0].SetActive(true);
             }
-        }
+            else if (userName.Contains("민준"))
+            {
+                leftSelections[1].SetActive(true);
+            }
+        }   
         else
         {
-            Debug.Log("텍스트 꺼짐");
-            isShowed = false;
-            foreach (var i in nameText)
+            if (userName.Contains("은빈"))
             {
-                i.gameObject.SetActive(false);
+                rightSelections[0].SetActive(true);
+            }
+            else if (userName.Contains("민준"))
+            {
+                rightSelections[1].SetActive(true);
             }
         }
     }
+
+    
+    
+    
+    
+    
+    
+    // private void TextClear()
+    // {
+    //     LeftNameText1.text = "";
+    //     LeftNameText2.text = "";
+    //     
+    //     RightNameText1.text = "";
+    //     RightNameText2.text = "";
+    // }
+    //
+    // private void TurnOnResultText()
+    // {
+    //     if (!isShowed)
+    //     {
+    //         Debug.Log("텍스트 켜짐");
+    //         isShowed = true;
+    //         foreach (var i in nameText)
+    //         {
+    //             i.gameObject.SetActive(true);
+    //         }
+    //     }
+    //     else
+    //     {
+    //         Debug.Log("텍스트 꺼짐");
+    //         isShowed = false;
+    //         foreach (var i in nameText)
+    //         {
+    //             i.gameObject.SetActive(false);
+    //         }
+    //     }
+    // }
 }
+
