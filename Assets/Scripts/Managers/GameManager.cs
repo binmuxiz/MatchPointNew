@@ -2,6 +2,7 @@ using System;
 using Cysharp.Threading.Tasks;
 using Fusion;
 using Network;
+using Sound;
 using UI;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -13,6 +14,8 @@ public enum GameState
 
 public class GameManager: Singleton<GameManager>
 {
+    public SoundController SoundController;
+    
     public GameObject BalanceGameSettingButton;
     public GameState GameState = GameState.Login;
     
@@ -114,8 +117,8 @@ public class GameManager: Singleton<GameManager>
 // 1:1 미팅 룸 조인        
     public async void EnterDoubleRoom(string myId, string otherId)
     {
-        loadingUI.Loading(3000, "1:1 미팅룸 접속중");
-
+        loadingUI.Show("1:1 미팅룸으로 이동합니다.");
+        
         Debug.Log("Entering Double Room");
         if (WorldGameObejct.activeSelf)
         {
@@ -143,7 +146,9 @@ public class GameManager: Singleton<GameManager>
         CameraController.Instance.SetFacingRoomCamera();
         
         await SessionManager.Instance.StartSessionAsync(args, doubleRoomRunnerPrefab);
+        
+        await loadingUI.Hide();
 
-        DoubleRoom.Instance.Enter();
+        DoubleRoom.Instance.Enter(SoundController);
     }
 }
