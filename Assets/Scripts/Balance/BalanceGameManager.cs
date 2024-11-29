@@ -27,6 +27,9 @@ public class BalanceGameManager : MonoBehaviour
     // public TMP_Text RightNameText1;
     // public TMP_Text RightNameText2;
 
+    public TMP_Text leftText;
+    public TMP_Text rightText;
+
     private Color color;
     // public List<TMP_Text> nameText;
     private bool isShowed = false;
@@ -47,7 +50,7 @@ public class BalanceGameManager : MonoBehaviour
     private void OnEnable()
     {
         BalanceGameListPanel.SetActive(false);
-        BalanceGamePlayPanel.SetActive(false);
+        /**/BalanceGamePlayPanel.SetActive(false);
     }
 
 
@@ -168,8 +171,8 @@ public class BalanceGameManager : MonoBehaviour
     private void SetBalanceGameUnit(int index)
     {
         BalanceGameTopicText.text = SharedData.Instance.realBalanceGameList.topic;
-        LeftButton.GetComponentInChildren<TMP_Text>().text = SharedData.Instance.realBalanceGameList.options[index].left;
-        RightButton.GetComponentInChildren<TMP_Text>().text = SharedData.Instance.realBalanceGameList.options[index].right;
+        leftText.text = SharedData.Instance.realBalanceGameList.options[index].left;
+        rightText.text = SharedData.Instance.realBalanceGameList.options[index].right;
     }
 
     

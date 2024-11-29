@@ -134,7 +134,7 @@ public class GameManager: Singleton<GameManager>
 
         string[] arr = { myId, otherId };
         Array.Sort(arr);
-        string roomId = $"{arr[0]}_{arr[1]}";
+        string roomId = $"{arr[0]}_{arr[1]}_1";
         
         var args = new StartGameArgs
         {
