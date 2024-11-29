@@ -22,7 +22,7 @@ public class GroupRoom : Singleton<GroupRoom>
     public RoomInfo roomInfo;
     public int maxPlayers;
 
-    private const int CountDown = 2;
+    private const int CountDown = 5;
 
     private bool initalized = false;
 
