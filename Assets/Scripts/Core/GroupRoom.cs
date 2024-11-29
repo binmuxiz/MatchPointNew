@@ -55,6 +55,7 @@ public class GroupRoom : Singleton<GroupRoom>
         canvas.enabled = false;
         meetingCanvas.SetActive(false);
         waitingCanvas.SetActive(false);
+        loveSelectionResultCanvas.SetActive(false);
     }
 
     private void OnEnable()
@@ -63,6 +64,7 @@ public class GroupRoom : Singleton<GroupRoom>
         canvas.enabled = false;
         meetingCanvas.SetActive(false);
         waitingCanvas.SetActive(false);
+        loveSelectionResultCanvas.SetActive(false);
     }
 
     public async void Enter(RoomInfo roomInfo)
@@ -196,7 +198,7 @@ public class GroupRoom : Singleton<GroupRoom>
         {
             Debug.Log("작대기 성공");
             loveSelectionResultCanvas.SetActive(true);
-            await UniTask.Delay(TimeSpan.FromSeconds(3));   // 3초 보여주고 
+            await UniTask.Delay(TimeSpan.FromSeconds(5));   // 3초 보여주고 
             loveSelectionResultCanvas.SetActive(false);
             GoToDoubleRoom(PlayerData.Instance.UserId, votedUserId);
 
@@ -205,7 +207,7 @@ public class GroupRoom : Singleton<GroupRoom>
         {
             Debug.Log("작대기 실패");
             loveSelectionResultCanvas.SetActive(true);
-            await UniTask.Delay(TimeSpan.FromSeconds(3));
+            await UniTask.Delay(TimeSpan.FromSeconds(5));
             loveSelectionResultCanvas.SetActive(false);
             GoToWorld();
         }

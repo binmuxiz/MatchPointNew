@@ -7531,6 +7531,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4358820364207982, guid: 29d06c673ff3f1948abb2e144ac73d66, type: 3}
   m_PrefabInstance: {fileID: 233258282}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &233809161 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3701313616556167073, guid: 773aa71ece1825b42bbb240301bd4f7a, type: 3}
+  m_PrefabInstance: {fileID: 1475489929}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &237361050 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4353676151864232, guid: 8f6e03115ed50b943980d68d9115f1bd, type: 3}
@@ -71001,6 +71006,7 @@ MonoBehaviour:
   loveResult: 0
   aggregationDone: 0
   popupOpener: {fileID: 977651930}
+  loveSelectionResultCanvas: {fileID: 233809161}
 --- !u!224 &1855822747232395447
 RectTransform:
   m_ObjectHideFlags: 0
