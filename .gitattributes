@@ -1,0 +1,5 @@
+*.ShaderLab linguist-detectable=false
+*.JavaScript linguist-detectable=false
+*.Objective-C++ linguist-detectable=false
+*.HLSL linguist-detectable=false
+*.Mathematica linguist-detectable=false
